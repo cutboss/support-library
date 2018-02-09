@@ -1,0 +1,7 @@
+<resources>
+    <string name="review_dialog_title">어플 리뷰의 부탁</string>
+    <string name="review_dialog_message">이 어플이 마음에 드신다면 리뷰를 남겨주세요. 리뷰에 걸리는 시간은 1분 정도.</string>
+    <string name="review_dialog_button_yes">리뷰남기기</string>
+    <string name="review_dialog_button_no">아니요</string>
+    <string name="review_dialog_button_skip">후에</string>
+</resources>

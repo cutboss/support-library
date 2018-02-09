@@ -1,0 +1,7 @@
+<resources>
+    <string name="review_dialog_title">請評論這件應用軟件</string>
+    <string name="review_dialog_message">如果您喜歡使用這件應用軟件，請您評論它。寫評論只要一分鍾。</string>
+    <string name="review_dialog_button_yes">寫評論</string>
+    <string name="review_dialog_button_no">不要評論</string>
+    <string name="review_dialog_button_skip">等一下</string>
+</resources>

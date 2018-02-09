@@ -1,0 +1,7 @@
+<resources>
+    <string name="review_dialog_title">Xin cảm ơn bạn đã đánh giá ứng dụng</string>
+    <string name="review_dialog_message">Nếu bạn thích ứng dụng này, hãy cho chúng tôi biết đánh giá của bạn. Đánh giá ứng dụng có thể hoàn thành trong một phút. Chúng tôi rất biết ơn về đánh giá của bạn.</string>
+    <string name="review_dialog_button_yes">Đánh giá</string>
+    <string name="review_dialog_button_no">Không</string>
+    <string name="review_dialog_button_skip">Để sau</string>
+</resources>

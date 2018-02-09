@@ -1,0 +1,7 @@
+<resources>
+    <string name="review_dialog_title">Thank you for App Review</string>
+    <string name="review_dialog_message">If you like this application, please give us a review by all means. Leaving a review will be completed less than 1 minute. It would help us a lot.</string>
+    <string name="review_dialog_button_yes">Review</string>
+    <string name="review_dialog_button_no">No</string>
+    <string name="review_dialog_button_skip">Later</string>
+</resources>

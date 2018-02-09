@@ -1,0 +1,7 @@
+<resources>
+    <string name="review_dialog_title">アプリレビューのお願い</string>
+    <string name="review_dialog_message">このアプリを気に入っていただけましたら、是非ともレビューをお願いします。レビューは1分未満で完了します。</string>
+    <string name="review_dialog_button_yes">はい</string>
+    <string name="review_dialog_button_no">いいえ</string>
+    <string name="review_dialog_button_skip">あとで</string>
+</resources>

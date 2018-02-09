@@ -1,0 +1,7 @@
+<resources>
+    <string name="review_dialog_title">请评论这件应用软件</string>
+    <string name="review_dialog_message">如果您喜欢使用这件应用软件，请您评论它。写评论只要一分钟。</string>
+    <string name="review_dialog_button_yes">写评论</string>
+    <string name="review_dialog_button_no">不要评论</string>
+    <string name="review_dialog_button_skip">等一下</string>
+</resources>
