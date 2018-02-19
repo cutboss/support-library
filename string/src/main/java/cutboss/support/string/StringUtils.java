@@ -21,7 +21,7 @@ public class StringUtils {
      * @param charset
      * @return Bytes
      */
-    public static int getBytes(String text, String charset) {
+    public static int getByteLength(String text, String charset) {
         int length = 0;
         if (null == text) {
             return length;
