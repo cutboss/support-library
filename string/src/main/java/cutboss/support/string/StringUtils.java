@@ -4,8 +4,6 @@
 
 package cutboss.support.string;
 
-import android.util.Log;
-
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -15,22 +13,21 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtils {
     /**
+     * Count bytes of text.
      *
-     *
-     * @param text
-     * @param charset
-     * @return Bytes
+     * @param text Text
+     * @param charsetName The name of a supported charset
+     * @return Count result of bytes
      */
-    public static int getByteLength(String text, String charset) {
-        int length = 0;
+    public static int countBytes(String text, String charsetName) {
         if (null == text) {
-            return length;
+            return 0;
         }
         try {
-            length = text.getBytes(charset).length;
+            return text.getBytes(charsetName).length;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            return -1;
         }
-        return length;
     }
 }

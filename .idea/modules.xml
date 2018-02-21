@@ -3,16 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/boss/boss.iml" filepath="$PROJECT_DIR$/boss/boss.iml" />
-      <module fileurl="file://D:\git\support-library\boss\boss.iml" filepath="D:\git\support-library\boss\boss.iml" />
       <module fileurl="file://$PROJECT_DIR$/dialog/dialog.iml" filepath="$PROJECT_DIR$/dialog/dialog.iml" />
-      <module fileurl="file://D:\git\support-library\dialog\dialog.iml" filepath="D:\git\support-library\dialog\dialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/review/review.iml" filepath="$PROJECT_DIR$/review/review.iml" />
-      <module fileurl="file://D:\git\support-library\review\review.iml" filepath="D:\git\support-library\review\review.iml" />
       <module fileurl="file://$PROJECT_DIR$/string/string.iml" filepath="$PROJECT_DIR$/string/string.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-library.iml" filepath="$PROJECT_DIR$/support-library.iml" />
       <module fileurl="file://D:\git\support-library\.idea\support-library.iml" filepath="D:\git\support-library\.idea\support-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/util/util.iml" filepath="$PROJECT_DIR$/util/util.iml" />
-      <module fileurl="file://D:\git\support-library\util\util.iml" filepath="D:\git\support-library\util\util.iml" />
     </modules>
   </component>
 </project>
