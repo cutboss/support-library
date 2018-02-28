@@ -13,6 +13,31 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtils {
     /**
+     *
+     *
+     * @param cs CharSequence
+     * @return is empty
+     */
+    public static boolean isEmpty(CharSequence cs) {
+        return ((null == cs) || ("".equals(cs)));
+    }
+
+    /**
+     *
+     *
+     * @param s
+     * @return
+     */
+    public static boolean isLong(String s) {
+        try {
+            Long.parseLong(s);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Count bytes of text.
      *
      * @param text Text
