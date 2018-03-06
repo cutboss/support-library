@@ -55,4 +55,20 @@ public class StringUtils {
             return -1;
         }
     }
+
+    /**
+     *
+     *
+     * @param text Text
+     * @return
+     */
+    public static String removeLineBreaks(String text) {
+        if (null == text) {
+            return null;
+        }
+        if ("".equals(text)) {
+            return "";
+        }
+        return text.replaceAll("[\r\n]", "");
+    }
 }
