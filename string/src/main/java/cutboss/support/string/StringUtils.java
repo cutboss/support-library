@@ -71,4 +71,20 @@ public class StringUtils {
         }
         return text.replaceAll("[\r\n]", "");
     }
+
+    /**
+     *
+     *
+     * @param text
+     * @return
+     */
+    public static String removeSpaces(String text) {
+        if (null == text) {
+            return null;
+        }
+        if ("".equals(text)) {
+            return "";
+        }
+        return text.replaceAll("[\\u00A0\\u0020\\u3000\t]", "");
+    }
 }
