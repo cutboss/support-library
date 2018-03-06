@@ -87,4 +87,20 @@ public class StringUtils {
         }
         return text.replaceAll("[\\u00A0\\u0020\\u3000\t]", "");
     }
+
+    /**
+     *
+     *
+     * @param text
+     * @return
+     */
+    public static String removeWhitespace(String text) {
+        if (null == text) {
+            return null;
+        }
+        if ("".equals(text)) {
+            return "";
+        }
+        return text.replaceAll("[\\u00A0\\u0020\\u3000\t\r\n]", "");
+    }
 }
