@@ -2,7 +2,7 @@
  * Copyright (C) 2018 CUTBOSS
  */
 
-package cutboss.support.string;
+package cutboss.support.text;
 
 import java.io.UnsupportedEncodingException;
 
