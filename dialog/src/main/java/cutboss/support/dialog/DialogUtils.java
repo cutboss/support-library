@@ -26,7 +26,6 @@ package cutboss.support.dialog;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 /**
  * DialogUtils.
@@ -34,9 +33,6 @@ import android.util.Log;
  * @author CUTBOSS
  */
 public class DialogUtils {
-    /** TAG */
-    private static final String TAG = DialogUtils.class.getSimpleName();
-
     /**
      * Show the SingleChoiceDialog.
      *
@@ -48,21 +44,64 @@ public class DialogUtils {
     public static void showSingleChoiceDialog(
             Activity activity, CharSequence[] items, int checkedItem,
             SingleChoiceDialog.OnClickListener listener) {
-        Log.d(TAG, "showSingleChoiceDialog: start");
-        Log.d(TAG, "showSingleChoiceDialog: checkedItem: " + checkedItem);
-        Log.d(TAG, "showSingleChoiceDialog: listener: " + listener);
-
         // set args
         Bundle args = new Bundle();
         args.putCharSequenceArray(SingleChoiceDialog.KEY_ITEMS, items);
         args.putInt(SingleChoiceDialog.KEY_CHECKED_ITEM, checkedItem);
-        Log.d(TAG, "showSingleChoiceDialog: args: " + args);
 
         // show dialog
         SingleChoiceDialog dialog = new SingleChoiceDialog().setOnClickListener(listener);
         dialog.setArguments(args);
         dialog.show(activity.getFragmentManager(), SingleChoiceDialog.TAG);
+    }
 
-        Log.d(TAG, "showSingleChoiceDialog: end");
+    /**
+     *
+     *
+     * @param activity
+     * @param titleId
+     * @param messageId
+     * @param listener
+     */
+    public static void showConfirmDialog(
+            Activity activity, int titleId, int messageId,
+            ConfirmDialog.OnClickListener listener) {
+        showConfirmDialog(
+                activity, titleId, messageId, 0, 0, listener);
+    }
+
+    /**
+     *
+     *
+     * @param activity
+     * @param titleId
+     * @param messageId
+     * @param positiveButtonTextId
+     * @param negativeButtonTextId
+     * @param listener
+     */
+    public static void showConfirmDialog(
+            Activity activity, int titleId, int messageId,
+            int positiveButtonTextId, int negativeButtonTextId,
+            ConfirmDialog.OnClickListener listener) {
+        // set args
+        Bundle args = new Bundle();
+        if (0 < titleId) {
+            args.putInt(ConfirmDialog.KEY_TITLE_ID, titleId);
+        }
+        if (0 < messageId) {
+            args.putInt(ConfirmDialog.KEY_MESSAGE_ID, messageId);
+        }
+        if (0 < positiveButtonTextId) {
+            args.putInt(ConfirmDialog.KEY_POSITIVE_BUTTON_TEXT_ID, positiveButtonTextId);
+        }
+        if (0 < negativeButtonTextId) {
+            args.putInt(ConfirmDialog.KEY_NEGATIVE_BUTTON_TEXT_ID, negativeButtonTextId);
+        }
+
+        // show dialog
+        ConfirmDialog dialog = new ConfirmDialog().setOnClickListener(listener);
+        dialog.setArguments(args);
+        dialog.show(activity.getFragmentManager(), ConfirmDialog.TAG);
     }
 }

@@ -32,45 +32,55 @@ import android.os.Bundle;
 import java.io.Serializable;
 
 /**
- * SingleChoiceDialog.
+ * ConfirmDialog.
  *
  * @author CUTBOSS
  */
-public class SingleChoiceDialog extends BaseDialog {
+public class ConfirmDialog extends BaseDialog {
     /** TAG */
-    public static final String TAG = SingleChoiceDialog.class.getSimpleName();
+    public static final String TAG = ConfirmDialog.class.getSimpleName();
 
     /** KEY */
-    public static final String KEY_ITEMS = "items";
-    public static final String KEY_CHECKED_ITEM = "checked_item";
+    public static final String KEY_TITLE_ID = "title_id";
+    public static final String KEY_MESSAGE_ID = "message_id";
+    public static final String KEY_POSITIVE_BUTTON_TEXT_ID = "positive_button_text_id";
+    public static final String KEY_NEGATIVE_BUTTON_TEXT_ID = "negative_button_text_id";
     public static final String KEY_LISTENER = BaseDialog.KEY_LISTENER;
 
     /**
      * Default constructor.
      */
-    public SingleChoiceDialog() {
+    public ConfirmDialog() {
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // get arguments
         Bundle args = getArguments();
-        CharSequence[] items;
-        int checkedItem;
+        int titleId = 0;
+        int messageId = 0;
+        int positiveButtonTextId = android.R.string.ok;
+        int negativeButtonTextId = android.R.string.cancel;
         final OnClickListener listener;
         if (null != args) {
-            // get items
-            if (args.containsKey(KEY_ITEMS)) {
-                items = args.getCharSequenceArray(KEY_ITEMS);
-            } else {
-                throw new IllegalArgumentException("Items no exist.");
+            // get title id
+            if (args.containsKey(KEY_TITLE_ID)){
+                titleId = args.getInt(KEY_TITLE_ID);
             }
 
-            // get checked item
-            if (args.containsKey(KEY_CHECKED_ITEM)) {
-                checkedItem = args.getInt(KEY_CHECKED_ITEM, 0);
-            } else {
-                checkedItem = 0;
+            // get message id
+            if (args.containsKey(KEY_MESSAGE_ID)){
+                messageId = args.getInt(KEY_MESSAGE_ID);
+            }
+
+            // get positive button text id
+            if (args.containsKey(KEY_POSITIVE_BUTTON_TEXT_ID)){
+                positiveButtonTextId = args.getInt(KEY_POSITIVE_BUTTON_TEXT_ID);
+            }
+
+            // get negative button text id
+            if (args.containsKey(KEY_NEGATIVE_BUTTON_TEXT_ID)){
+                negativeButtonTextId = args.getInt(KEY_NEGATIVE_BUTTON_TEXT_ID);
             }
 
             // get listener
@@ -85,19 +95,36 @@ public class SingleChoiceDialog extends BaseDialog {
 
         // create dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+        if (0 < titleId) {
+            builder.setTitle(titleId);
+        }
+        if (0 < messageId) {
+            builder.setMessage(messageId);
+        }
+        builder.setPositiveButton(positiveButtonTextId, new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int which) {
                 // listen?
                 if (null != listener) {
                     // get tag
                     String tag = getTag();
 
-                    // item click
-                    listener.onItemClick(tag, which);
+                    // positive click
+                    listener.onPositiveClick(tag, which);
                 }
+            }
+        });
+        builder.setNegativeButton(negativeButtonTextId, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // listen?
+                if (null != listener) {
+                    // get tag
+                    String tag = getTag();
 
-                // dismiss
-                dismiss();
+                    // negative click
+                    listener.onNegativeClick(tag, which);
+                }
             }
         });
         return builder.create();
@@ -107,16 +134,17 @@ public class SingleChoiceDialog extends BaseDialog {
      * OnClickListener.
      */
     public interface OnClickListener extends Serializable {
-        void onItemClick(String tag, int which);
+        void onPositiveClick(String tag, int which);
+        void onNegativeClick(String tag, int which);
     }
 
     /**
      * Set the OnClickListener.
      *
      * @param listener OnClickListener
-     * @return SingleChoiceDialog
+     * @return ConfirmDialog
      */
-    public SingleChoiceDialog setOnClickListener(OnClickListener listener) {
+    public ConfirmDialog setOnClickListener(OnClickListener listener) {
         // is null?
         if (null == listener) {
             return this;
