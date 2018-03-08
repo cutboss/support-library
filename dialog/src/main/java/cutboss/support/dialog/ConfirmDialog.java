@@ -87,7 +87,7 @@ public class ConfirmDialog extends BaseDialog {
 
             // get listener
             if (args.containsKey(KEY_LISTENER)) {
-                listener = (OnClickListener) args.getSerializable(KEY_LISTENER);
+                listener = args.getParcelable(KEY_LISTENER);
             } else {
                 listener = null;
             }
