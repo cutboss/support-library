@@ -135,11 +135,9 @@ public class ConfirmDialog extends BaseDialog {
     /**
      * OnClickListener.
      */
-    public static class OnClickListener implements Parcelable {
-        public void onPositiveClick(String tag, int which) {};
-        public void onNegativeClick(String tag, int which) {};
-
-        private int mData;
+    public static abstract class OnClickListener implements Parcelable {
+        public abstract void onPositiveClick(String tag, int which);
+        public abstract void onNegativeClick(String tag, int which);
 
         @Override
         public int describeContents() {
@@ -147,24 +145,7 @@ public class ConfirmDialog extends BaseDialog {
         }
 
         @Override
-        public void writeToParcel(Parcel out, int flags) {
-            out.writeInt(mData);
-        }
-
-        public static final Parcelable.Creator<OnClickListener> CREATOR
-                = new Parcelable.Creator<OnClickListener>() {
-            public OnClickListener createFromParcel(Parcel in) {
-                return new OnClickListener(in);
-            }
-
-            public OnClickListener[] newArray(int size) {
-                return new OnClickListener[size];
-            }
-        };
-
-        private OnClickListener(Parcel in) {
-            mData = in.readInt();
-        }
+        public void writeToParcel(Parcel dest, int flags) {}
     }
 
     /**
