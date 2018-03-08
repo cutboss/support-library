@@ -133,9 +133,9 @@ public class ConfirmDialog extends BaseDialog {
     /**
      * OnClickListener.
      */
-    public class OnClickListener implements Serializable {
-        void onPositiveClick(String tag, int which) {};
-        void onNegativeClick(String tag, int which) {};
+    public static class OnClickListener implements Serializable {
+        public void onPositiveClick(String tag, int which) {};
+        public void onNegativeClick(String tag, int which) {};
     }
 
     /**
