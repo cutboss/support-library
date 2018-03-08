@@ -28,6 +28,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 
@@ -133,9 +135,36 @@ public class ConfirmDialog extends BaseDialog {
     /**
      * OnClickListener.
      */
-    public static class OnClickListener implements Serializable {
+    public static class OnClickListener implements Parcelable {
         public void onPositiveClick(String tag, int which) {};
         public void onNegativeClick(String tag, int which) {};
+
+        private int mData;
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            out.writeInt(mData);
+        }
+
+        public static final Parcelable.Creator<OnClickListener> CREATOR
+                = new Parcelable.Creator<OnClickListener>() {
+            public OnClickListener createFromParcel(Parcel in) {
+                return new OnClickListener(in);
+            }
+
+            public OnClickListener[] newArray(int size) {
+                return new OnClickListener[size];
+            }
+        };
+
+        private OnClickListener(Parcel in) {
+            mData = in.readInt();
+        }
     }
 
     /**
@@ -152,7 +181,7 @@ public class ConfirmDialog extends BaseDialog {
 
         // set args
         Bundle args = new Bundle();
-        args.putSerializable(KEY_LISTENER, listener);
+        args.putParcelable(KEY_LISTENER, listener);
         setArguments(args);
         return this;
     }
