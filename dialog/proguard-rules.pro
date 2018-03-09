@@ -20,7 +20,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep public class cutboss.support.dialog.** { public *; }
+-keep public class cutboss.support.dialog.** {
+    public *;
+    protected *;
+}
+
 -assumenosideeffects class android.util.Log {
     public static int v(...);
     public static int d(...);
