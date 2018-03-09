@@ -31,8 +31,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * ConfirmDialog.
  *
@@ -135,17 +133,9 @@ public class ConfirmDialog extends BaseDialog {
     /**
      * OnClickListener.
      */
-    public static abstract class OnClickListener implements Parcelable {
-        public abstract void onPositiveClick(String tag, int which);
-        public abstract void onNegativeClick(String tag, int which);
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {}
+    public static abstract class OnClickListener extends ParcelableListener {
+        protected abstract void onPositiveClick(String tag, int which);
+        protected abstract void onNegativeClick(String tag, int which);
     }
 
     /**

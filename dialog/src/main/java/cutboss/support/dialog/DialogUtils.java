@@ -61,21 +61,6 @@ public class DialogUtils {
      * @param activity
      * @param titleId
      * @param messageId
-     * @param listener
-     */
-    public static void showConfirmDialog(
-            Activity activity, int titleId, int messageId,
-            ConfirmDialog.OnClickListener listener) {
-        showConfirmDialog(
-                activity, titleId, messageId, 0, 0, listener);
-    }
-
-    /**
-     *
-     *
-     * @param activity
-     * @param titleId
-     * @param messageId
      * @param positiveButtonTextId
      * @param negativeButtonTextId
      * @param listener
