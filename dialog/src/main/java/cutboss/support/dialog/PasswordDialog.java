@@ -46,13 +46,7 @@ public class PasswordDialog extends BaseDialog {
     public static final String TAG = PasswordDialog.class.getSimpleName();
 
     /** KEY */
-    public static final String KEY_TITLE_ID = BaseDialog.KEY_TITLE_ID;
-    public static final String KEY_MESSAGE_ID = BaseDialog.KEY_MESSAGE_ID;
-    public static final String KEY_POSITIVE_BUTTON_TEXT_ID =
-            BaseDialog.KEY_POSITIVE_BUTTON_TEXT_ID;
-    public static final String KEY_NEGATIVE_BUTTON_TEXT_ID =
-            BaseDialog.KEY_NEGATIVE_BUTTON_TEXT_ID;
-    public static final String KEY_LISTENER = BaseDialog.KEY_LISTENER;
+    public static final String KEY_HINT_ID = "hint_id";
 
     /**
      * Default constructor.
@@ -65,7 +59,7 @@ public class PasswordDialog extends BaseDialog {
         // get arguments
         Bundle args = getArguments();
         int titleId = 0;
-        int messageId = 0;
+        int hintId = 0;
         int positiveButtonTextId = android.R.string.ok;
         int negativeButtonTextId = android.R.string.cancel;
         final OnClickListener listener;
@@ -75,9 +69,9 @@ public class PasswordDialog extends BaseDialog {
                 titleId = args.getInt(KEY_TITLE_ID);
             }
 
-            // get message id
-            if (args.containsKey(KEY_MESSAGE_ID)){
-                messageId = args.getInt(KEY_MESSAGE_ID);
+            // get hint id
+            if (args.containsKey(KEY_HINT_ID)){
+                hintId = args.getInt(KEY_HINT_ID);
             }
 
             // get positive button text id
@@ -109,6 +103,9 @@ public class PasswordDialog extends BaseDialog {
         final EditText inputView = view.findViewById(R.id.cutboss_support_dialog_password_input);
         final int defaultInputType = inputView.getInputType();
         inputView.setInputType(defaultInputType|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        if (0 < hintId) {
+            inputView.setHint(hintId);
+        }
 
         // get check box
         CheckBox checkBox = view.findViewById(R.id.cutboss_support_dialog_password_check_box);

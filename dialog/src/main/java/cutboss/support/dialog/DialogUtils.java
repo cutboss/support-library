@@ -95,13 +95,13 @@ public class DialogUtils {
      *
      * @param activity
      * @param titleId
-     * @param messageId
+     * @param hintId
      * @param positiveButtonTextId
      * @param negativeButtonTextId
      * @param listener
      */
     public static void showPasswordDialog(
-            Activity activity, int titleId, int messageId,
+            Activity activity, int titleId, int hintId,
             int positiveButtonTextId, int negativeButtonTextId,
             PasswordDialog.OnClickListener listener) {
         // set args
@@ -109,8 +109,8 @@ public class DialogUtils {
         if (0 < titleId) {
             args.putInt(PasswordDialog.KEY_TITLE_ID, titleId);
         }
-        if (0 < messageId) {
-            args.putInt(PasswordDialog.KEY_MESSAGE_ID, messageId);
+        if (0 < hintId) {
+            args.putInt(PasswordDialog.KEY_HINT_ID, hintId);
         }
         if (0 < positiveButtonTextId) {
             args.putInt(PasswordDialog.KEY_POSITIVE_BUTTON_TEXT_ID, positiveButtonTextId);
