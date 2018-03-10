@@ -89,4 +89,39 @@ public class DialogUtils {
         dialog.setArguments(args);
         dialog.show(activity.getFragmentManager(), ConfirmDialog.TAG);
     }
+
+    /**
+     *
+     *
+     * @param activity
+     * @param titleId
+     * @param messageId
+     * @param positiveButtonTextId
+     * @param negativeButtonTextId
+     * @param listener
+     */
+    public static void showPasswordDialog(
+            Activity activity, int titleId, int messageId,
+            int positiveButtonTextId, int negativeButtonTextId,
+            PasswordDialog.OnClickListener listener) {
+        // set args
+        Bundle args = new Bundle();
+        if (0 < titleId) {
+            args.putInt(PasswordDialog.KEY_TITLE_ID, titleId);
+        }
+        if (0 < messageId) {
+            args.putInt(PasswordDialog.KEY_MESSAGE_ID, messageId);
+        }
+        if (0 < positiveButtonTextId) {
+            args.putInt(PasswordDialog.KEY_POSITIVE_BUTTON_TEXT_ID, positiveButtonTextId);
+        }
+        if (0 < negativeButtonTextId) {
+            args.putInt(PasswordDialog.KEY_NEGATIVE_BUTTON_TEXT_ID, negativeButtonTextId);
+        }
+
+        // show dialog
+        PasswordDialog dialog = new PasswordDialog().setOnClickListener(listener);
+        dialog.setArguments(args);
+        dialog.show(activity.getFragmentManager(), PasswordDialog.TAG);
+    }
 }

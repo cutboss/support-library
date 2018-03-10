@@ -34,6 +34,10 @@ import android.os.Bundle;
  */
 public class BaseDialog extends DialogFragment {
     /** KEY */
+    protected static final String KEY_TITLE_ID = "title_id";
+    protected static final String KEY_MESSAGE_ID = "message_id";
+    protected static final String KEY_POSITIVE_BUTTON_TEXT_ID = "positive_button_text_id";
+    protected static final String KEY_NEGATIVE_BUTTON_TEXT_ID = "negative_button_text_id";
     protected static final String KEY_LISTENER = "listener";
 
     @Override
@@ -45,5 +49,24 @@ public class BaseDialog extends DialogFragment {
 
         // set args
         super.setArguments(args);
+    }
+
+    /**
+     *
+     *
+     * @param listener
+     * @return
+     */
+    protected BaseDialog setOnClickListener(ParcelableListener listener) {
+        // is null?
+        if (null == listener) {
+            return this;
+        }
+
+        // set args
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_LISTENER, listener);
+        setArguments(args);
+        return this;
     }
 }

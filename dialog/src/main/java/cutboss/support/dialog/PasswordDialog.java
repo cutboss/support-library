@@ -26,17 +26,24 @@ package cutboss.support.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 
 /**
- * ConfirmDialog.
+ * PasswordDialog.
  *
  * @author CUTBOSS
  */
-public class ConfirmDialog extends BaseDialog {
+public class PasswordDialog extends BaseDialog {
     /** TAG */
-    public static final String TAG = ConfirmDialog.class.getSimpleName();
+    public static final String TAG = PasswordDialog.class.getSimpleName();
 
     /** KEY */
     public static final String KEY_TITLE_ID = BaseDialog.KEY_TITLE_ID;
@@ -50,7 +57,7 @@ public class ConfirmDialog extends BaseDialog {
     /**
      * Default constructor.
      */
-    public ConfirmDialog() {
+    public PasswordDialog() {
     }
 
     @Override
@@ -93,14 +100,41 @@ public class ConfirmDialog extends BaseDialog {
             throw new IllegalArgumentException("Args no exist.");
         }
 
+        // get layout view
+        final View view =
+                ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                        .inflate(R.layout.cutboss_support_dialog_password, null);
+
+        // get input view
+        final EditText inputView = view.findViewById(R.id.cutboss_support_dialog_password_input);
+        final int defaultInputType = inputView.getInputType();
+        inputView.setInputType(defaultInputType|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        // get check box
+        CheckBox checkBox = view.findViewById(R.id.cutboss_support_dialog_password_check_box);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                // set input type
+                int type;
+                if (checked) {
+                    type = defaultInputType|InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+                } else {
+                    type = defaultInputType|InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                }
+                inputView.setInputType(type);
+
+                //
+                inputView.setSelection(inputView.getText().toString().length());
+            }
+        });
+
         // create dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         if (0 < titleId) {
             builder.setTitle(titleId);
         }
-        if (0 < messageId) {
-            builder.setMessage(messageId);
-        }
+        builder.setView(view);
         builder.setPositiveButton(positiveButtonTextId, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -110,7 +144,7 @@ public class ConfirmDialog extends BaseDialog {
                     String tag = getTag();
 
                     // positive click
-                    listener.onPositiveClick(tag, which);
+                    listener.onPositiveClick(tag, which, inputView.getText().toString());
                 }
             }
         });
@@ -134,7 +168,7 @@ public class ConfirmDialog extends BaseDialog {
      * OnClickListener.
      */
     public static abstract class OnClickListener extends ParcelableListener {
-        protected abstract void onPositiveClick(String tag, int which);
+        protected abstract void onPositiveClick(String tag, int which, String password);
         protected abstract void onNegativeClick(String tag, int which);
     }
 
@@ -142,18 +176,9 @@ public class ConfirmDialog extends BaseDialog {
      * Set the OnClickListener.
      *
      * @param listener OnClickListener
-     * @return ConfirmDialog
+     * @return PasswordDialog
      */
-    public ConfirmDialog setOnClickListener(OnClickListener listener) {
-        // is null?
-        if (null == listener) {
-            return this;
-        }
-
-        // set args
-        Bundle args = new Bundle();
-        args.putParcelable(KEY_LISTENER, listener);
-        setArguments(args);
-        return this;
+    public PasswordDialog setOnClickListener(OnClickListener listener) {
+        return (PasswordDialog) super.setOnClickListener(listener);
     }
 }
