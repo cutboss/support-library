@@ -167,10 +167,14 @@ public class PasswordDialog extends BaseDialog {
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                InputMethodManager imm =
-                        (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (null != imm) {
-                    imm.showSoftInput(inputView, 0);
+                //
+                if (inputView.requestFocus()) {
+                    //
+                    InputMethodManager imm =
+                            (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (null != imm) {
+                        imm.showSoftInput(inputView, 0);
+                    }
                 }
             }
         });
