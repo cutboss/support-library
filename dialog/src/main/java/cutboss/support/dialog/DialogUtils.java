@@ -104,6 +104,26 @@ public class DialogUtils {
             Activity activity, int titleId, int hintId,
             int positiveButtonTextId, int negativeButtonTextId,
             PasswordDialog.OnClickListener listener) {
+        showPasswordDialog(
+                activity, titleId, hintId,
+                positiveButtonTextId, negativeButtonTextId, true, listener);
+    }
+
+    /**
+     *
+     *
+     * @param activity
+     * @param titleId
+     * @param hintId
+     * @param positiveButtonTextId
+     * @param negativeButtonTextId
+     * @param cancelable
+     * @param listener
+     */
+    public static void showPasswordDialog(
+            Activity activity, int titleId, int hintId,
+            int positiveButtonTextId, int negativeButtonTextId, boolean cancelable,
+            PasswordDialog.OnClickListener listener) {
         // set args
         Bundle args = new Bundle();
         if (0 < titleId) {
@@ -122,6 +142,7 @@ public class DialogUtils {
         // show dialog
         PasswordDialog dialog = new PasswordDialog().setOnClickListener(listener);
         dialog.setArguments(args);
+        dialog.setCancelable(cancelable);
         dialog.show(activity.getFragmentManager(), PasswordDialog.TAG);
     }
 }

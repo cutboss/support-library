@@ -29,6 +29,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,6 +107,9 @@ public class PasswordDialog extends BaseDialog {
         if (0 < hintId) {
             inputView.setHint(hintId);
         }
+        InputFilter[] filters = new InputFilter[1];
+        filters[0] = new InputFilter.LengthFilter(16);
+        inputView.setFilters(filters);
 
         // get check box
         CheckBox checkBox = view.findViewById(R.id.cutboss_support_dialog_password_check_box);

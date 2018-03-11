@@ -1,2 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="cutboss_support_dialog_password">Password</string>
+    <string name="cutboss_support_dialog_password_display">Display password</string>
 </resources>
