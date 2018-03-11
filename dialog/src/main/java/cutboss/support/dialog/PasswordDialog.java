@@ -33,6 +33,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -162,7 +163,18 @@ public class PasswordDialog extends BaseDialog {
                 }
             }
         });
-        return builder.create();
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                InputMethodManager imm =
+                        (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (null != imm) {
+                    imm.showSoftInput(inputView, 0);
+                }
+            }
+        });
+        return dialog;
     }
 
     /**
