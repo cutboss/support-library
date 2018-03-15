@@ -50,6 +50,9 @@ public class PasswordDialog extends BaseDialog {
     /** KEY */
     public static final String KEY_HINT_ID = "hint_id";
 
+    /** OnClickListener */
+    private OnClickListener mListener;
+
     /**
      * Default constructor.
      */
@@ -64,7 +67,6 @@ public class PasswordDialog extends BaseDialog {
         int hintId = 0;
         int positiveButtonTextId = android.R.string.ok;
         int negativeButtonTextId = android.R.string.cancel;
-        final OnClickListener listener;
         if (null != args) {
             // get title id
             if (args.containsKey(KEY_TITLE_ID)){
@@ -88,9 +90,7 @@ public class PasswordDialog extends BaseDialog {
 
             // get listener
             if (args.containsKey(KEY_LISTENER)) {
-                listener = args.getParcelable(KEY_LISTENER);
-            } else {
-                listener = null;
+                mListener = args.getParcelable(KEY_LISTENER);
             }
         } else {
             throw new IllegalArgumentException("Args no exist.");
@@ -141,12 +141,12 @@ public class PasswordDialog extends BaseDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // listen?
-                if (null != listener) {
+                if (null != mListener) {
                     // get tag
                     String tag = getTag();
 
                     // positive click
-                    listener.onPositiveClick(tag, which, inputView.getText().toString());
+                    mListener.onPositiveClick(dialog, which, inputView.getText().toString(), tag);
                 }
             }
         });
@@ -154,12 +154,12 @@ public class PasswordDialog extends BaseDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // listen?
-                if (null != listener) {
+                if (null != mListener) {
                     // get tag
                     String tag = getTag();
 
                     // negative click
-                    listener.onNegativeClick(tag, which);
+                    mListener.onNegativeClick(dialog, which, tag);
                 }
             }
         });
@@ -181,12 +181,27 @@ public class PasswordDialog extends BaseDialog {
         return dialog;
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        // listen?
+        if (null != mListener) {
+            // get tag
+            String tag = getTag();
+
+            // dismiss
+            mListener.onDismiss(dialog, tag);
+        }
+        super.onDismiss(dialog);
+    }
+
     /**
      * OnClickListener.
      */
     public static abstract class OnClickListener extends ParcelableListener {
-        protected abstract void onPositiveClick(String tag, int which, String password);
-        protected abstract void onNegativeClick(String tag, int which);
+        protected abstract void onPositiveClick(
+                DialogInterface dialog, int which, String password, String tag);
+        protected abstract void onNegativeClick(DialogInterface dialog, int which, String tag);
+        protected abstract void onDismiss(DialogInterface dialog, String tag);
     }
 
     /**
