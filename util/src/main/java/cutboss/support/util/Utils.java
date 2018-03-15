@@ -250,7 +250,6 @@ public class Utils {
     public static boolean showSoftInput(Context context, View view, int flags) {
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        Log.d(TAG, "showSoftInput: imm: " + imm);
         if (null == imm) {
             return false;
         }
@@ -266,5 +265,33 @@ public class Utils {
             }
         }
         return show;
+    }
+
+    /**
+     *
+     *
+     * @param context
+     * @param view
+     * @return
+     */
+    public static boolean hideSoftInput(Context context, View view) {
+        return hideSoftInput(context, view, 0);
+    }
+
+    /**
+     *
+     *
+     * @param context
+     * @param view
+     * @param flags
+     * @return
+     */
+    public static boolean hideSoftInput(Context context, View view, int flags) {
+        InputMethodManager imm =
+                (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (null == imm) {
+            return false;
+        }
+        return imm.hideSoftInputFromWindow(view.getWindowToken(), flags);
     }
 }
