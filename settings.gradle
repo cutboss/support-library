@@ -1,1 +1,1 @@
-include ':review', ':boss', ':util', ':dialog', ':text'
+include ':review', ':boss', ':util', ':dialog', ':text', ':file'
