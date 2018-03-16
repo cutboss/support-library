@@ -26,6 +26,7 @@ package cutboss.support.file;
 
 import android.content.Context;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -41,7 +42,7 @@ public class FileUtils {
      * Write to file.
      *
      * @param context
-     * @param fileName
+     * @param fileName The name of the file to open
      * @param text
      * @return
      */
@@ -63,5 +64,26 @@ public class FileUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * Read from file.
+     *
+     * @param context
+     * @param fileName The name of the file to open
+     * @return
+     */
+    public static String readFile(Context context, String fileName) {
+        try {
+            FileInputStream fis = context.openFileInput(fileName);
+            byte[] bytes = new byte[fis.available()];
+            if (0 > fis.read(bytes)) {
+                return "";
+            }
+            return new String(bytes);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
