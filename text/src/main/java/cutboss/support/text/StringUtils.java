@@ -57,6 +57,38 @@ public class StringUtils {
     }
 
     /**
+     * Get the sentence of text.
+     *
+     * @param text Text
+     * @param maxLength
+     * @return Sentence
+     */
+    public static String getSentence(String text, int maxLength) {
+        // invalid?
+        if ((null == text) || "".equals(text)) {
+            return "";
+        }
+        if (1 > maxLength) {
+            return "";
+        }
+
+        // get paragraph
+        String[] paragraph = text.split("[\r\n]");
+        for (String sentence : paragraph) {
+            // empty?
+            if ("".equals(sentence)) {
+                // skip
+                continue;
+            }
+            if (maxLength < sentence.length()) {
+                return sentence.substring(0, maxLength);
+            }
+            return sentence;
+        }
+        return "";
+    }
+
+    /**
      *
      *
      * @param text Text
