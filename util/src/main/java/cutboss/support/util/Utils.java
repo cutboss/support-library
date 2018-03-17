@@ -360,6 +360,6 @@ public class Utils {
         }
 
         // Formatted string.
-        return new SimpleDateFormat(pattern, locale).format(obj);
+        return new SimpleDateFormat(pattern).format(obj);
     }
 }
