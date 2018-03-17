@@ -15,6 +15,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * Utils.
  *
@@ -290,5 +293,73 @@ public class Utils {
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         return null != imm && imm.hideSoftInputFromWindow(view.getWindowToken(), flags);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // DATE
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     * Formats an object to produce a string.
+     *
+     * @param obj The object to format
+     * @return Formatted string
+     */
+    public static String formatDate(Object obj) {
+        return formatDate(obj, false);
+    }
+
+    /**
+     * Formats an object to produce a string.
+     *
+     * @param obj The object to format
+     * @param day Display day of the week
+     * @return Formatted string
+     */
+    public static String formatDate(Object obj, boolean day) {
+        // get locale
+        Locale locale = Locale.getDefault();
+
+        //
+        String pattern;
+        if (Locale.JAPAN == locale) {
+            // 日本語
+            pattern = "yyyy/MM/dd";
+            if (day) {
+                pattern = pattern + "(E)";
+            }
+            pattern = pattern + " HH:mm";
+        } else if (Locale.KOREA == locale) {
+            // 韓国語
+            pattern = "yyyy.MM.dd";
+            if (day) {
+                pattern = pattern + " (E)";
+            }
+            pattern = pattern + " HH:mm";
+        } else if (Locale.SIMPLIFIED_CHINESE == locale) {
+            // 簡体字
+            pattern = "yyyy-MM-dd";
+            if (day) {
+                pattern = pattern + "(E)";
+            }
+            pattern = pattern + " HH:mm";
+        } else if (Locale.TRADITIONAL_CHINESE == locale) {
+            // 繫体字
+            pattern = "yyyy-MM-dd";
+            if (day) {
+                pattern = pattern + "(E)";
+            }
+            pattern = pattern + " HH:mm";
+        } else {
+            // 英語
+            pattern = "";
+            if (day) {
+                pattern = pattern + "E ";
+            }
+            pattern = pattern + "MM/dd/yyyy HH:mm";
+        }
+
+        // Formatted string.
+        return new SimpleDateFormat(pattern, locale).format(obj);
     }
 }
