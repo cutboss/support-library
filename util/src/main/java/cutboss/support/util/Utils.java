@@ -320,28 +320,28 @@ public class Utils {
      */
     public static String formatDate(Locale locale, Object obj, boolean day) {
         String pattern;
-        if (Locale.JAPAN == locale) {
+        if (Locale.JAPAN.equals(locale)) {
             // 日本語
             pattern = "yyyy/MM/dd";
             if (day) {
                 pattern = pattern + "(E)";
             }
             pattern = pattern + " HH:mm";
-        } else if (Locale.KOREA == locale) {
+        } else if (Locale.KOREA.equals(locale)) {
             // 韓国語
             pattern = "yyyy.MM.dd";
             if (day) {
                 pattern = pattern + " (E)";
             }
             pattern = pattern + " HH:mm";
-        } else if (Locale.SIMPLIFIED_CHINESE == locale) {
+        } else if (Locale.SIMPLIFIED_CHINESE.equals(locale)) {
             // 簡体字
             pattern = "yyyy-MM-dd";
             if (day) {
                 pattern = pattern + "(E)";
             }
             pattern = pattern + " HH:mm";
-        } else if (Locale.TRADITIONAL_CHINESE == locale) {
+        } else if (Locale.TRADITIONAL_CHINESE.equals(locale)) {
             // 繫体字
             pattern = "yyyy-MM-dd";
             if (day) {
@@ -358,6 +358,6 @@ public class Utils {
         }
 
         // Formatted string.
-        return new SimpleDateFormat(pattern).format(obj);
+        return new SimpleDateFormat(pattern, locale).format(obj);
     }
 }
