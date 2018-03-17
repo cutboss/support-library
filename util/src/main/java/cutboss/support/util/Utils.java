@@ -302,25 +302,23 @@ public class Utils {
     /**
      * Formats an object to produce a string.
      *
+     * @param locale
      * @param obj The object to format
      * @return Formatted string
      */
-    public static String formatDate(Object obj) {
-        return formatDate(obj, false);
+    public static String formatDate(Locale locale, Object obj) {
+        return formatDate(locale, obj, false);
     }
 
     /**
      * Formats an object to produce a string.
      *
+     * @param locale
      * @param obj The object to format
      * @param day Display day of the week
      * @return Formatted string
      */
-    public static String formatDate(Object obj, boolean day) {
-        // get locale
-        Locale locale = Locale.getDefault();
-
-        //
+    public static String formatDate(Locale locale, Object obj, boolean day) {
         String pattern;
         if (Locale.JAPAN == locale) {
             // 日本語
@@ -360,6 +358,6 @@ public class Utils {
         }
 
         // Formatted string.
-        return new SimpleDateFormat(pattern).format(obj);
+        return new SimpleDateFormat(pattern, locale).format(obj);
     }
 }
