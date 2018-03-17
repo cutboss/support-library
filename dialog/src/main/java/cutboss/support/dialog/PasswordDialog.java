@@ -181,6 +181,9 @@ public class PasswordDialog extends BaseDialog {
                 }
             }
         });
+        //
+        final Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        button.setEnabled(false);
         inputView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -192,7 +195,6 @@ public class PasswordDialog extends BaseDialog {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 if ("".equals(s.toString())) {
                     button.setEnabled(false);
                 } else {
