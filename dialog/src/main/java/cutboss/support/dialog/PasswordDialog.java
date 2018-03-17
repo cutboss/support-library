@@ -169,7 +169,11 @@ public class PasswordDialog extends BaseDialog {
         final AlertDialog dialog = builder.create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onShow(DialogInterface dialog) {
+            public void onShow(DialogInterface dialogInterface) {
+                //
+                Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setEnabled(false);
+
                 //
                 if (inputView.requestFocus()) {
                     //
@@ -182,8 +186,6 @@ public class PasswordDialog extends BaseDialog {
             }
         });
         //
-        final Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        button.setEnabled(false);
         inputView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -195,6 +197,7 @@ public class PasswordDialog extends BaseDialog {
 
             @Override
             public void afterTextChanged(Editable s) {
+                Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 if ("".equals(s.toString())) {
                     button.setEnabled(false);
                 } else {
