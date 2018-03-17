@@ -25,7 +25,10 @@
 package cutboss.support.dialog;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * BaseDialog.
@@ -68,5 +71,30 @@ public class BaseDialog extends DialogFragment {
         args.putParcelable(KEY_LISTENER, listener);
         setArguments(args);
         return this;
+    }
+
+    /**
+     *
+     *
+     * @param context
+     * @param view
+     * @return
+     */
+    protected static boolean hideSoftInput(Context context, View view) {
+        return hideSoftInput(context, view, 0);
+    }
+
+    /**
+     *
+     *
+     * @param context
+     * @param view
+     * @param flags
+     * @return
+     */
+    protected static boolean hideSoftInput(Context context, View view, int flags) {
+        InputMethodManager imm =
+                (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        return null != imm && imm.hideSoftInputFromWindow(view.getWindowToken(), flags);
     }
 }

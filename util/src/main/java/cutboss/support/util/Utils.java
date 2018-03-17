@@ -289,9 +289,6 @@ public class Utils {
     public static boolean hideSoftInput(Context context, View view, int flags) {
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (null == imm) {
-            return false;
-        }
-        return imm.hideSoftInputFromWindow(view.getWindowToken(), flags);
+        return null != imm && imm.hideSoftInputFromWindow(view.getWindowToken(), flags);
     }
 }

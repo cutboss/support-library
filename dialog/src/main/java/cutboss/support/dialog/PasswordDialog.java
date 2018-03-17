@@ -29,11 +29,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -146,7 +149,7 @@ public class PasswordDialog extends BaseDialog {
                     String tag = getTag();
 
                     // positive click
-                    mListener.onPositiveClick(dialog, which, inputView.getText().toString(), tag);
+                    mListener.onPositiveClick(tag, which, inputView.getText().toString());
                 }
             }
         });
@@ -159,11 +162,11 @@ public class PasswordDialog extends BaseDialog {
                     String tag = getTag();
 
                     // negative click
-                    mListener.onNegativeClick(dialog, which, tag);
+                    mListener.onNegativeClick(tag, which);
                 }
             }
         });
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
@@ -178,6 +181,25 @@ public class PasswordDialog extends BaseDialog {
                 }
             }
         });
+        inputView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                if ("".equals(s.toString())) {
+                    button.setEnabled(false);
+                } else {
+                    button.setEnabled(true);
+                }
+            }
+        });
         return dialog;
     }
 
@@ -189,8 +211,12 @@ public class PasswordDialog extends BaseDialog {
             String tag = getTag();
 
             // dismiss
-            mListener.onDismiss(dialog, tag);
+            mListener.onDismiss(tag);
         }
+
+        //
+        hideSoftInput(getActivity(), getActivity().getCurrentFocus());
+
         super.onDismiss(dialog);
     }
 
@@ -198,10 +224,9 @@ public class PasswordDialog extends BaseDialog {
      * OnClickListener.
      */
     public static abstract class OnClickListener extends ParcelableListener {
-        protected abstract void onPositiveClick(
-                DialogInterface dialog, int which, String password, String tag);
-        protected abstract void onNegativeClick(DialogInterface dialog, int which, String tag);
-        protected abstract void onDismiss(DialogInterface dialog, String tag);
+        protected abstract void onPositiveClick(String tag, int which, String password);
+        protected abstract void onNegativeClick(String tag, int which);
+        protected abstract void onDismiss(String tag);
     }
 
     /**
