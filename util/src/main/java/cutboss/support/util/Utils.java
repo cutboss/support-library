@@ -302,46 +302,49 @@ public class Utils {
     /**
      * Formats an object to produce a string.
      *
-     * @param locale
      * @param obj The object to format
      * @return Formatted string
      */
-    public static String formatDate(Locale locale, Object obj) {
-        return formatDate(locale, obj, false);
+    public static String formatDate(Object obj) {
+        return formatDate(obj, false);
     }
 
     /**
      * Formats an object to produce a string.
      *
-     * @param locale
      * @param obj The object to format
      * @param day Display day of the week
      * @return Formatted string
      */
-    public static String formatDate(Locale locale, Object obj, boolean day) {
+    public static String formatDate(Object obj, boolean day) {
+        // get default locale
+        Locale locale = Locale.getDefault();
+
+        //
         String pattern;
-        if (Locale.JAPAN.equals(locale)) {
+        if (Locale.JAPAN.equals(locale) || Locale.JAPANESE.equals(locale)) {
             // 日本語
             pattern = "yyyy/MM/dd";
             if (day) {
                 pattern = pattern + "(E)";
             }
             pattern = pattern + " HH:mm";
-        } else if (Locale.KOREA.equals(locale)) {
+        } else if (Locale.KOREA.equals(locale) || Locale.KOREAN.equals(locale)) {
             // 韓国語
             pattern = "yyyy.MM.dd";
             if (day) {
                 pattern = pattern + " (E)";
             }
             pattern = pattern + " HH:mm";
-        } else if (Locale.SIMPLIFIED_CHINESE.equals(locale)) {
+        } else if (Locale.SIMPLIFIED_CHINESE.equals(locale)
+                || Locale.CHINA.equals(locale) || Locale.CHINESE.equals(locale)) {
             // 簡体字
             pattern = "yyyy-MM-dd";
             if (day) {
                 pattern = pattern + "(E)";
             }
             pattern = pattern + " HH:mm";
-        } else if (Locale.TRADITIONAL_CHINESE.equals(locale)) {
+        } else if (Locale.TRADITIONAL_CHINESE.equals(locale) || Locale.TAIWAN.equals(locale)) {
             // 繫体字
             pattern = "yyyy-MM-dd";
             if (day) {
