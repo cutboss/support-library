@@ -220,7 +220,7 @@ public class PasswordDialog extends BaseDialog {
         }
 
         //
-        hideSoftInput(getActivity(), getActivity().getCurrentFocus());
+        hideSoftInput(getActivity(), getActivity().getWindow().getDecorView());
 
         super.onDismiss(dialog);
     }
