@@ -5,8 +5,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 14
-        versionName "1.5.5"
+        versionCode 15
+        versionName "1.6.0"
         version = android.defaultConfig.versionName
     }
     buildTypes {
@@ -42,7 +42,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '1.5.5'
+            pom.version = '1.6.0'
             pom.groupId = 'cutboss.support'
             pom.artifactId = 'util'
         }

@@ -9,6 +9,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,22 @@ import java.util.Locale;
 public class Utils {
     /** TAG */
     private static final String TAG = Utils.class.getSimpleName();
+
+    /**
+     *
+     *
+     * @param context Context
+     * @return
+     */
+    public static String getVersionName(Context context) {
+        try {
+            return context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     // ---------------------------------------------------------------------------------------------
     // BROWSER
