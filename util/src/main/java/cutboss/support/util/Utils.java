@@ -323,17 +323,30 @@ public class Utils {
      * @return Formatted string
      */
     public static String formatDate(Object obj) {
-        return formatDate(obj, false);
+        return formatDateTime(obj, false, false);
+    }
+
+    public static String formatDate(Object obj, boolean day) {
+        return formatDateTime(obj, false, day);
+    }
+
+    public static String formatDateTime(Object obj) {
+        return formatDateTime(obj, true, false);
+    }
+
+    public static String formatDateTime(Object obj, boolean day) {
+        return formatDateTime(obj, true, day);
     }
 
     /**
      * Formats an object to produce a string.
      *
      * @param obj The object to format
+     * @param time
      * @param day Display day of the week
      * @return Formatted string
      */
-    public static String formatDate(Object obj, boolean day) {
+    public static String formatDateTime(Object obj, boolean time, boolean day) {
         // get default locale
         Locale locale = Locale.getDefault();
 
@@ -345,14 +358,18 @@ public class Utils {
             if (day) {
                 pattern = pattern + "(E)";
             }
-            pattern = pattern + " HH:mm";
+            if (time) {
+                pattern = pattern + " HH:mm";
+            }
         } else if (Locale.KOREA.equals(locale) || Locale.KOREAN.equals(locale)) {
             // 韓国語
             pattern = "yyyy.MM.dd";
             if (day) {
                 pattern = pattern + " (E)";
             }
-            pattern = pattern + " HH:mm";
+            if (time) {
+                pattern = pattern + " HH:mm";
+            }
         } else if (Locale.SIMPLIFIED_CHINESE.equals(locale)
                 || Locale.CHINA.equals(locale) || Locale.CHINESE.equals(locale)) {
             // 簡体字
@@ -360,21 +377,28 @@ public class Utils {
             if (day) {
                 pattern = pattern + "(E)";
             }
-            pattern = pattern + " HH:mm";
+            if (time) {
+                pattern = pattern + " HH:mm";
+            }
         } else if (Locale.TRADITIONAL_CHINESE.equals(locale) || Locale.TAIWAN.equals(locale)) {
             // 繫体字
             pattern = "yyyy-MM-dd";
             if (day) {
                 pattern = pattern + "(E)";
             }
-            pattern = pattern + " HH:mm";
+            if (time) {
+                pattern = pattern + " HH:mm";
+            }
         } else {
             // 英語
             pattern = "";
             if (day) {
                 pattern = pattern + "E ";
             }
-            pattern = pattern + "MM/dd/yyyy HH:mm";
+            pattern = pattern + "MM/dd/yyyy";
+            if (time) {
+                pattern = pattern + " HH:mm";
+            }
         }
 
         // Formatted string.
