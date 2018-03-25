@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/boss/boss.iml" filepath="$PROJECT_DIR$/boss/boss.iml" />
       <module fileurl="file://$PROJECT_DIR$/dialog/dialog.iml" filepath="$PROJECT_DIR$/dialog/dialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/file/file.iml" filepath="$PROJECT_DIR$/file/file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ntp/ntp.iml" filepath="$PROJECT_DIR$/ntp/ntp.iml" />
       <module fileurl="file://$PROJECT_DIR$/review/review.iml" filepath="$PROJECT_DIR$/review/review.iml" />
       <module fileurl="file://D:\git\support-library\text\string.iml" filepath="D:\git\support-library\text\string.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-library.iml" filepath="$PROJECT_DIR$/support-library.iml" />
