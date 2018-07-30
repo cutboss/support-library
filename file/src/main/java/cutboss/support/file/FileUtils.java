@@ -289,7 +289,7 @@ public class FileUtils {
     }
 
     /**  */
-    public static final int REQUEST_CODE_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 2013122702;
+    public static final int REQUEST_CODE_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1227;
 
     /**
      *
