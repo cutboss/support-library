@@ -8,9 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/net/net.iml" filepath="$PROJECT_DIR$/net/net.iml" />
       <module fileurl="file://$PROJECT_DIR$/ntp/ntp.iml" filepath="$PROJECT_DIR$/ntp/ntp.iml" />
       <module fileurl="file://$PROJECT_DIR$/review/review.iml" filepath="$PROJECT_DIR$/review/review.iml" />
-      <module fileurl="file://D:\git\support-library\text\string.iml" filepath="D:\git\support-library\text\string.iml" />
+      <module fileurl="file://$PROJECT_DIR$/text/string.iml" filepath="$PROJECT_DIR$/text/string.iml" />
       <module fileurl="file://$PROJECT_DIR$/support-library.iml" filepath="$PROJECT_DIR$/support-library.iml" />
-      <module fileurl="file://D:\git\support-library\.idea\support-library.iml" filepath="D:\git\support-library\.idea\support-library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/support-library.iml" filepath="$PROJECT_DIR$/.idea/support-library.iml" />
       <module fileurl="file://$PROJECT_DIR$/text/text.iml" filepath="$PROJECT_DIR$/text/text.iml" />
       <module fileurl="file://$PROJECT_DIR$/util/util.iml" filepath="$PROJECT_DIR$/util/util.iml" />
     </modules>
