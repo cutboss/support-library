@@ -58,7 +58,7 @@ public class FileUtils {
     public static final String RESULT_KEY_PATH = "path";
 
     /**  */
-    public static final int FILE_NAME_LENGTH = 15;
+    public static final int FILE_NAME_LENGTH = 40;
 
     /**
      *

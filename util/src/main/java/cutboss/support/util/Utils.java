@@ -142,6 +142,11 @@ public class Utils {
         return startShare(context, null, text, uri, title);
     }
 
+    public static boolean startShare(
+            Context context, String subject, String text, Uri uri, CharSequence title) {
+        return startShare(context, subject, text, uri, title, "text/plain");
+    }
+
     /**
      * Start share.
      *
@@ -150,12 +155,13 @@ public class Utils {
      * @param text text
      * @param uri uri
      * @param title optional title that will be displayed in the chooser
+     * @param mimeType
      * @return result
      */
     public static boolean startShare(
-            Context context, String subject, String text, Uri uri, CharSequence title) {
+            Context context, String subject, String text, Uri uri, CharSequence title, String mimeType) {
         Intent target = new Intent(Intent.ACTION_SEND);
-        target.setType("text/plain");
+        target.setType(mimeType);
         if ((null != subject) && !"".equals(subject)) {
             target.putExtra(Intent.EXTRA_SUBJECT, subject);
         }
