@@ -29,12 +29,12 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.io.File;
@@ -61,11 +61,55 @@ public class FileUtils {
     public static final int FILE_NAME_LENGTH = 40;
 
     /**
+     * Get the file name from uri.
      *
+     * @param context context
+     * @param uri uri
+     * @return file name
+     */
+    @NonNull
+    public static String getFileNameFromUri(@NonNull Context context, Uri uri) {
+        // is null
+        if (null == uri) {
+            return "";
+        }
+
+        // get scheme
+        String scheme = uri.getScheme();
+
+        // get file name
+        String fileName = "";
+        switch (scheme) {
+            case "content":
+                String[] projection = {MediaStore.MediaColumns.DISPLAY_NAME};
+                Cursor cursor = context.getContentResolver()
+                        .query(uri, projection, null, null, null);
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        fileName = cursor.getString(
+                                cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME));
+                    }
+                    cursor.close();
+                }
+                break;
+
+            case "file":
+                fileName = new File(uri.getPath()).getName();
+                break;
+
+            default:
+                break;
+        }
+        return fileName;
+    }
+
+    /**
+     * Get the extension of file.
      *
-     * @param fileName
+     * @param fileName File name
      * @return Extension
      */
+    @NonNull
     public static String getExtension(final @NonNull String fileName) {
         String extension = "";
         int point = fileName.lastIndexOf('.');
@@ -81,6 +125,7 @@ public class FileUtils {
      * @param fileName file name
      * @return file name with extension removed
      */
+    @NonNull
     public static String removeFileNameExtension(final @NonNull String fileName) {
         int point = fileName.lastIndexOf(".");
         if (-1 < point) {
@@ -311,6 +356,7 @@ public class FileUtils {
 
     /**  */
     public static final int REQUEST_CODE_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1227;
+    public static final int REQUEST_CODE_PERMISSIONS_READ_EXTERNAL_STORAGE = 1228;
 
     /**
      *
@@ -325,6 +371,15 @@ public class FileUtils {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 REQUEST_CODE_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+    }
+
+    public static boolean checkSelfPermissionReadExternalStorage(
+            final @NonNull Activity activity) {
+        return !requestPermissions(
+                activity,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                REQUEST_CODE_PERMISSIONS_READ_EXTERNAL_STORAGE);
     }
 
     /**
