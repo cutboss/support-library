@@ -160,6 +160,27 @@ public class FileUtils {
 
     public static Map<String, Object> writeFileToExternalStorage(
             final @NonNull Activity activity, @NonNull String fileName, @NonNull String text,
+            String directoryName, boolean temp) {
+        return writeFileToExternalStorage(
+                activity, fileName, text, directoryName, "UTF-8", temp);
+    }
+
+    public static Map<String, Object> writeFileToExternalStorage(
+            final @NonNull Activity activity, @NonNull String fileName, @NonNull String text,
+            String directoryName) {
+        return writeFileToExternalStorage(
+                activity, fileName, text, directoryName, "UTF-8");
+    }
+
+    public static Map<String, Object> writeFileToExternalStorage(
+            final @NonNull Activity activity, @NonNull String fileName, @NonNull String text,
+            String directoryName, String charset) {
+        return writeFileToExternalStorage(
+                activity, fileName, text, directoryName, charset, false);
+    }
+
+    public static Map<String, Object> writeFileToExternalStorage(
+            final @NonNull Activity activity, @NonNull String fileName, @NonNull String text,
             String directoryName, String charset, boolean temp) {
         // get extension
         String extension = getExtension(fileName);
