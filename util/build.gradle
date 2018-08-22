@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 23
-        versionCode 17
-        versionName "1.6.2"
+        targetSdkVersion 27
+        versionCode 18
+        versionName "1.7.0"
         version = android.defaultConfig.versionName
     }
     buildTypes {
@@ -42,7 +43,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '1.6.2'
+            pom.version = '1.7.0'
             pom.groupId = 'cutboss.support'
             pom.artifactId = 'util'
         }

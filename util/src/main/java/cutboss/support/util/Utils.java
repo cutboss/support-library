@@ -280,12 +280,10 @@ public class Utils {
             return false;
         }
         boolean show = imm.showSoftInput(view, flags);
-        Log.d(TAG, "showSoftInput: show: " + show);
         if (!show) {
             view.setFocusable(true);
             view.setFocusableInTouchMode(true);
             boolean focus = view.requestFocus();
-            Log.d(TAG, "showSoftInput: focus: " + focus);
             if (focus) {
                 return showSoftInput(context, view, flags);
             }
@@ -329,80 +327,127 @@ public class Utils {
      * @return Formatted string
      */
     public static String formatDate(Object obj) {
-        return formatDateTime(obj, false, false);
+        return formatDateTime(obj, true, false, false);
     }
 
+    /**
+     *
+     *
+     * @param obj
+     * @param day
+     * @return
+     */
     public static String formatDate(Object obj, boolean day) {
-        return formatDateTime(obj, false, day);
+        return formatDateTime(obj, true, day, false);
     }
 
+    /**
+     *
+     *
+     * @param obj
+     * @return
+     */
     public static String formatDateTime(Object obj) {
-        return formatDateTime(obj, true, false);
+        return formatDateTime(obj, true, false, true);
     }
 
+    /**
+     *
+     *
+     * @param obj
+     * @param day
+     * @return
+     */
     public static String formatDateTime(Object obj, boolean day) {
-        return formatDateTime(obj, true, day);
+        return formatDateTime(obj, true, day, true);
+    }
+
+    /**
+     *
+     *
+     * @param obj
+     * @return
+     */
+    public static String formatYearMonth(Object obj) {
+        return formatDateTime(obj, false, false, false);
     }
 
     /**
      * Formats an object to produce a string.
      *
      * @param obj The object to format
-     * @param time
+     * @param date
      * @param day Display day of the week
+     * @param time
      * @return Formatted string
      */
-    public static String formatDateTime(Object obj, boolean time, boolean day) {
+    public static String formatDateTime(Object obj, boolean date, boolean day, boolean time) {
         // get default locale
         Locale locale = Locale.getDefault();
 
         //
         String pattern;
         if (Locale.JAPAN.equals(locale) || Locale.JAPANESE.equals(locale)) {
-            // 日本語
-            pattern = "yyyy/MM/dd";
-            if (day) {
-                pattern = pattern + "(E)";
-            }
-            if (time) {
-                pattern = pattern + " HH:mm";
+            // japanese
+            pattern = "yyyy/MM";
+            if (date) {
+                pattern = pattern + "/dd";
+                if (day) {
+                    pattern = pattern + "(E)";
+                }
+                if (time) {
+                    pattern = pattern + " HH:mm";
+                }
             }
         } else if (Locale.KOREA.equals(locale) || Locale.KOREAN.equals(locale)) {
             // 韓国語
-            pattern = "yyyy.MM.dd";
-            if (day) {
-                pattern = pattern + " (E)";
-            }
-            if (time) {
-                pattern = pattern + " HH:mm";
+            pattern = "yyyy.MM";
+            if (date) {
+                pattern = pattern + ".dd";
+                if (day) {
+                    pattern = pattern + " (E)";
+                }
+                if (time) {
+                    pattern = pattern + " HH:mm";
+                }
             }
         } else if (Locale.SIMPLIFIED_CHINESE.equals(locale)
                 || Locale.CHINA.equals(locale) || Locale.CHINESE.equals(locale)) {
             // 簡体字
-            pattern = "yyyy-MM-dd";
-            if (day) {
-                pattern = pattern + "(E)";
-            }
-            if (time) {
-                pattern = pattern + " HH:mm";
+            pattern = "yyyy-MM";
+            if (date) {
+                pattern = pattern + "-dd";
+                if (day) {
+                    pattern = pattern + "(E)";
+                }
+                if (time) {
+                    pattern = pattern + " HH:mm";
+                }
             }
         } else if (Locale.TRADITIONAL_CHINESE.equals(locale) || Locale.TAIWAN.equals(locale)) {
             // 繫体字
-            pattern = "yyyy-MM-dd";
-            if (day) {
-                pattern = pattern + "(E)";
-            }
-            if (time) {
-                pattern = pattern + " HH:mm";
+            pattern = "yyyy-MM";
+            if (date) {
+                pattern = pattern + "-dd";
+                if (day) {
+                    pattern = pattern + "(E)";
+                }
+                if (time) {
+                    pattern = pattern + " HH:mm";
+                }
             }
         } else {
-            // 英語
+            // english
             pattern = "";
-            if (day) {
+            if (date && day) {
                 pattern = pattern + "E ";
             }
-            pattern = pattern + "MM/dd/yyyy";
-            if (time) {
+            pattern = pattern + "MM";
+            if (date) {
+                pattern = pattern + "/dd";
+            }
+            pattern = pattern + "/yyyy";
+            if (date && time) {
                 pattern = pattern + " HH:mm";
             }
         }
