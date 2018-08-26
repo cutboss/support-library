@@ -10,6 +10,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -454,5 +455,25 @@ public class Utils {
 
         // Formatted string.
         return new SimpleDateFormat(pattern, locale).format(obj);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // LOCALE
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     * .
+     *
+     * @param context Context
+     * @param newLocale The new default locale.
+     */
+    public static void setLocale(Context context, Locale newLocale) {
+        // set new locale
+        Locale.setDefault(newLocale);
+
+        // Resourcesに対するロケールを設定
+        Configuration config = new Configuration();
+        config.setLocale(newLocale);
+        context.getResources().updateConfiguration(config, null);
     }
 }
