@@ -476,4 +476,87 @@ public class Utils {
         config.setLocale(newLocale);
         context.getResources().updateConfiguration(config, null);
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // ISBN
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     *
+     *
+     * @param isbn13 ISBN13
+     * @return ISBN10
+     */
+    private String convertIsbn13ToIsbn10(String isbn13) {
+        if ((null == isbn13) || "".equals(isbn13) || (13 != isbn13.length())) {
+            return "";
+        }
+        String isbn10 = isbn13.substring(3, (isbn13.length() - 1));
+        int digit = 0;
+        for (int k = 0; k < isbn10.length(); k++) {
+            digit += (Integer.parseInt(String.valueOf(isbn10.charAt(k))) * (10 - k));
+        }
+        digit = (11 - (digit % 11));
+        if (10 == digit) {
+            isbn10 += "X";
+        } else if (11 == digit) {
+            isbn10 += "0";
+        } else {
+            isbn10 += String.valueOf(digit);
+        }
+        return isbn10;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // AMAZON
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     *
+     *
+     * @param isbn13 ISBN13
+     * @return Url
+     */
+    private String convertAmazonUrlFromIsbn13(String isbn13) {
+        return convertAmazonUrlFromIsbn10(convertIsbn13ToIsbn10(isbn13));
+    }
+
+    /**
+     *
+     *
+     * @param isbn10 ISBN10
+     * @return Url
+     */
+    private String convertAmazonUrlFromIsbn10(String isbn10) {
+        if ((null == isbn10) || "".equals(isbn10) || (10 != isbn10.length())) {
+            return "";
+        }
+        return ("https://www.amazon.co.jp/dp/"
+                + isbn10
+                + "/?_encoding=UTF8&tag=jempdac-22&language=ja_JP");
+    }
+
+    /**
+     *
+     *
+     * @param isbn13 ISBN13
+     * @return Image url
+     */
+    private String convertAmazonImageUrlFromIsbn13(String isbn13) {
+        return convertAmazonImageUrlFromIsbn10(convertIsbn13ToIsbn10(isbn13));
+    }
+
+    /**
+     *
+     *
+     * @param isbn10 ISBN10
+     * @return Image url
+     */
+    private String convertAmazonImageUrlFromIsbn10(String isbn10) {
+        if ((null == isbn10) || "".equals(isbn10) || (10 != isbn10.length())) {
+            return "";
+        }
+//        return ("http://images-jp.amazon.com/images/P/" + isbn10 + ".09.MZZZZZZZ");
+        return ("http://images-jp.amazon.com/images/P/" + isbn10 + ".09.LZZZZZZZ");
+    }
 }
