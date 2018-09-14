@@ -487,7 +487,7 @@ public class Utils {
      * @param isbn13 ISBN13
      * @return ISBN10
      */
-    public String convertIsbn13ToIsbn10(String isbn13) {
+    public static String convertIsbn13ToIsbn10(String isbn13) {
         if ((null == isbn13) || "".equals(isbn13) || (13 != isbn13.length())) {
             return "";
         }
@@ -517,7 +517,7 @@ public class Utils {
      * @param isbn13 ISBN13
      * @return Url
      */
-    public String convertAmazonUrlFromIsbn13(String isbn13) {
+    public static String convertAmazonUrlFromIsbn13(String isbn13) {
         return convertAmazonUrlFromIsbn10(convertIsbn13ToIsbn10(isbn13));
     }
 
@@ -527,7 +527,7 @@ public class Utils {
      * @param isbn10 ISBN10
      * @return Url
      */
-    public String convertAmazonUrlFromIsbn10(String isbn10) {
+    public static String convertAmazonUrlFromIsbn10(String isbn10) {
         if ((null == isbn10) || "".equals(isbn10) || (10 != isbn10.length())) {
             return "";
         }
@@ -542,7 +542,7 @@ public class Utils {
      * @param isbn13 ISBN13
      * @return Image url
      */
-    public String convertAmazonImageUrlFromIsbn13(String isbn13) {
+    public static String convertAmazonImageUrlFromIsbn13(String isbn13) {
         return convertAmazonImageUrlFromIsbn10(convertIsbn13ToIsbn10(isbn13));
     }
 
@@ -552,7 +552,7 @@ public class Utils {
      * @param isbn10 ISBN10
      * @return Image url
      */
-    public String convertAmazonImageUrlFromIsbn10(String isbn10) {
+    public static String convertAmazonImageUrlFromIsbn10(String isbn10) {
         if ((null == isbn10) || "".equals(isbn10) || (10 != isbn10.length())) {
             return "";
         }
