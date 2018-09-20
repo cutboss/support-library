@@ -507,6 +507,35 @@ public class Utils {
         return isbn10;
     }
 
+    /**
+     *
+     *
+     * @param isbn10 ISBN10
+     * @return ISBN13
+     */
+    public static String convertIsbn10ToIsbn13(String isbn10) {
+        // invalid?
+        if ((null == isbn10) || "".equals(isbn10) || (10 != isbn10.length())) {
+            return "";
+        }
+        String isbn13 = ("978" + isbn10.substring(0, (isbn10.length() - 1)));
+        int digit = 0;
+        for (int k = 0; k < isbn13.length(); k++) {
+            int num = Integer.parseInt(String.valueOf(isbn13.charAt(k)));
+            if (0 == (k % 2)) {
+                digit += num;
+            } else {
+                digit += (num * 3);
+            }
+        }
+        digit = (10 - (digit % 10));
+        if (10 == digit) {
+            digit = 0;
+        }
+        isbn13 += digit;
+        return isbn13;
+    }
+
     // ---------------------------------------------------------------------------------------------
     // AMAZON
     // ---------------------------------------------------------------------------------------------
@@ -558,5 +587,20 @@ public class Utils {
         }
 //        return ("http://images-jp.amazon.com/images/P/" + isbn10 + ".09.MZZZZZZZ");
         return ("http://images-jp.amazon.com/images/P/" + isbn10 + ".09.LZZZZZZZ");
+    }
+
+    /**
+     *
+     *
+     * @param url Url of amazon
+     * @return ASIN
+     */
+    public static String getAsinFromAmazonUrl(String url) {
+        // invalid?
+        if ((null == url) || "".equals(url)
+                || !url.contains("amazon") || !url.contains("/ASIN/")) {
+            return "";
+        }
+        return url.split("/ASIN/")[1].split("/")[0];
     }
 }
