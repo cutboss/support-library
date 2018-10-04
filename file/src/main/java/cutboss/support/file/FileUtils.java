@@ -30,19 +30,21 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.webkit.MimeTypeMap;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -422,5 +424,188 @@ public class FileUtils {
         Uri createdRow = context.getContentResolver().insert(
                 MediaStore.Files.getContentUri("external"), contentValues);
         return createdRow;
+    }
+
+    /**
+     *
+     *
+     * @param text
+     * @return
+     */
+    @NonNull
+    public static String removeProhibitedCharacters(@NonNull String text) {
+        return text.replace(":", "")
+                .replace("<", "")
+                .replace(">", "")
+                .replace("*", "")
+                .replace("?", "")
+                .replace("\"", "")
+                .replace("/", "")
+                .replace("\\", "")
+                .replace("\u00a5", "")
+                .replace("|", "")
+                .replace("\n", "")
+                .replace(" ", "_")
+                .replace("　", "_");
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // CACHE
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @param bitmap Bitmap
+     * @param quality
+     * @return
+     */
+    public static boolean writeCacheJpeg(
+            @NonNull Context context, @NonNull String fileName,
+            @NonNull Bitmap bitmap, int quality) {
+        return writeCacheBitmap(context, fileName, bitmap, Bitmap.CompressFormat.JPEG, quality);
+    }
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @param bitmap Bitmap
+     * @param quality
+     * @return
+     */
+    public static boolean writeCachePng(
+            @NonNull Context context, @NonNull String fileName,
+            @NonNull Bitmap bitmap, int quality) {
+        return writeCacheBitmap(context, fileName, bitmap, Bitmap.CompressFormat.PNG, quality);
+    }
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @param bitmap Bitmap
+     * @param format
+     * @param quality
+     * @return
+     */
+    public static boolean writeCacheBitmap(
+            @NonNull Context context, @NonNull String fileName,
+            @NonNull Bitmap bitmap, @NonNull Bitmap.CompressFormat format, int quality) {
+        // write cache file
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(format, quality, baos);
+        return writeCacheFile(context, fileName, baos.toByteArray());
+    }
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @param bytes
+     * @return
+     */
+    public static boolean writeCacheFile(
+            @NonNull Context context, @NonNull String fileName, @NonNull byte[] bytes) {
+        fileName = removeProhibitedCharacters(fileName);
+        if (fileName.isEmpty()) {
+            return false;
+        }
+        FileOutputStream fos = null;
+        try {
+            File file = new File(context.getCacheDir(), fileName);
+            if (file.createNewFile()) {
+                fos = new FileOutputStream(file);
+                fos.write(bytes);
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != fos) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @return Bitmap
+     */
+    @Nullable
+    public static Bitmap readCacheBitmap(@NonNull Context context, @NonNull String fileName) {
+        // read cache file
+        byte[] byteArray = readCacheFile(context, fileName);
+        if (null == byteArray) {
+            return null;
+        }
+        // decode bitmap
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @return
+     */
+    @Nullable
+    public static byte[] readCacheFile(@NonNull Context context, @NonNull String fileName) {
+        fileName = removeProhibitedCharacters(fileName);
+        if (fileName.isEmpty()) {
+            return null;
+        }
+        try {
+            File file = new File(context.getCacheDir(), fileName);
+            if (file.exists()) {
+                FileInputStream fis = new FileInputStream(file);
+                byte[] bytes = new byte[fis.available()];
+                if (0 > fis.read(bytes)) {
+                    return null;
+                }
+                return bytes;
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @return
+     */
+    public static boolean existsCacheFile(@NonNull Context context, @NonNull String fileName) {
+        fileName = removeProhibitedCharacters(fileName);
+        return (!fileName.isEmpty() && new File(context.getCacheDir(), fileName).exists());
+    }
+
+    /**
+     *
+     *
+     * @param context Context
+     * @param fileName File name
+     * @return
+     */
+    public static boolean deleteCacheFile(@NonNull Context context, @NonNull String fileName) {
+        fileName = removeProhibitedCharacters(fileName);
+        return (!fileName.isEmpty() && new File(context.getCacheDir(), fileName).delete());
     }
 }
