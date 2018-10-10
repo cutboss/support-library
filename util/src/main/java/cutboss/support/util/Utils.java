@@ -27,9 +27,6 @@ import java.util.Locale;
  * @author CUTBOSS
  */
 public class Utils {
-    /** TAG */
-    private static final String TAG = Utils.class.getSimpleName();
-
     /**
      *
      *
@@ -520,12 +517,9 @@ public class Utils {
             return "";
         }
         String isbn13 = ("978" + isbn10.substring(0, (isbn10.length() - 1)));
-        try {
-            Integer.parseInt(isbn13);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return "";
-        }
+       if (!NumberUtils.isNumeric(isbn13)) {
+           return "";
+       }
         int digit = 0;
         for (int k = 0; k < isbn13.length(); k++) {
             int num = Integer.parseInt(String.valueOf(isbn13.charAt(k)));
