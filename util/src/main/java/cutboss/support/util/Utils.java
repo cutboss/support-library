@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -519,6 +520,12 @@ public class Utils {
             return "";
         }
         String isbn13 = ("978" + isbn10.substring(0, (isbn10.length() - 1)));
+        try {
+            Integer.parseInt(isbn13);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return "";
+        }
         int digit = 0;
         for (int k = 0; k < isbn13.length(); k++) {
             int num = Integer.parseInt(String.valueOf(isbn13.charAt(k)));
