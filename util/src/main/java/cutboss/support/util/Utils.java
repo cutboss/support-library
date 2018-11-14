@@ -131,16 +131,26 @@ public class Utils {
     /**
      * Start share.
      *
-     * @param context context
-     * @param text text
-     * @param uri uri
-     * @param title optional title that will be displayed in the chooser
+     * @param context Context
+     * @param text Text
+     * @param uri Uri
+     * @param title Optional title that will be displayed in the chooser
      * @return result
      */
     public static boolean startShare(Context context, String text, Uri uri, CharSequence title) {
         return startShare(context, null, text, uri, title);
     }
 
+    /**
+     * Start share.
+     *
+     * @param context Context
+     * @param subject Subject
+     * @param text Text
+     * @param uri Uri
+     * @param title Optional title that will be displayed in the chooser
+     * @return result
+     */
     public static boolean startShare(
             Context context, String subject, String text, Uri uri, CharSequence title) {
         return startShare(context, subject, text, uri, title, "text/plain");

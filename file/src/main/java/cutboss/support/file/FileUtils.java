@@ -426,14 +426,19 @@ public class FileUtils {
         return createdRow;
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // ILLEGAL CHARACTERS
+    // ---------------------------------------------------------------------------------------------
+
     /**
+     * Removes illegal characters from the given string.
      *
-     *
-     * @param text
-     * @return
+     * @param text Input text
+     * @return Output text
      */
+    @SuppressWarnings("WeakerAccess")
     @NonNull
-    public static String removeProhibitedCharacters(@NonNull String text) {
+    public static String removeIllegalCharacters(@NonNull String text) {
         return text.replace(":", "")
                 .replace("<", "")
                 .replace(">", "")
@@ -450,18 +455,45 @@ public class FileUtils {
     }
 
     // ---------------------------------------------------------------------------------------------
-    // CACHE
+    // CACHE DIRECTORY
     // ---------------------------------------------------------------------------------------------
 
     /**
+     * Exists the Cache file in the cache directory.
      *
+     * @param context Context
+     * @param fileName File name
+     * @return Exists
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public static boolean existsCacheFile(@NonNull Context context, @NonNull String fileName) {
+        fileName = removeIllegalCharacters(fileName);
+        return (!fileName.isEmpty() && new File(context.getCacheDir(), fileName).exists());
+    }
+
+    /**
+     * Delete the Cache file in the cache directory.
+     *
+     * @param context Context
+     * @param fileName File name
+     * @return Result
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public static boolean deleteCacheFile(@NonNull Context context, @NonNull String fileName) {
+        fileName = removeIllegalCharacters(fileName);
+        return (!fileName.isEmpty() && new File(context.getCacheDir(), fileName).delete());
+    }
+
+    /**
+     * Writes the JPEG file in the cache directory.
      *
      * @param context Context
      * @param fileName File name
      * @param bitmap Bitmap
-     * @param quality
-     * @return
+     * @param quality Quality
+     * @return Result
      */
+    @SuppressWarnings("UnusedDeclaration")
     public static boolean writeCacheJpeg(
             @NonNull Context context, @NonNull String fileName,
             @NonNull Bitmap bitmap, int quality) {
@@ -469,14 +501,15 @@ public class FileUtils {
     }
 
     /**
-     *
+     * Writes the PNG file in the cache directory.
      *
      * @param context Context
      * @param fileName File name
      * @param bitmap Bitmap
-     * @param quality
-     * @return
+     * @param quality Quality
+     * @return Result
      */
+    @SuppressWarnings("UnusedDeclaration")
     public static boolean writeCachePng(
             @NonNull Context context, @NonNull String fileName,
             @NonNull Bitmap bitmap, int quality) {
@@ -484,15 +517,16 @@ public class FileUtils {
     }
 
     /**
-     *
+     * Writes the Bitmap file in the cache directory.
      *
      * @param context Context
      * @param fileName File name
      * @param bitmap Bitmap
-     * @param format
-     * @param quality
-     * @return
+     * @param format Format
+     * @param quality Quality
+     * @return Result
      */
+    @SuppressWarnings("WeakerAccess")
     public static boolean writeCacheBitmap(
             @NonNull Context context, @NonNull String fileName,
             @NonNull Bitmap bitmap, @NonNull Bitmap.CompressFormat format, int quality) {
@@ -503,16 +537,17 @@ public class FileUtils {
     }
 
     /**
-     *
+     * Writes the Cache file in the cache directory.
      *
      * @param context Context
      * @param fileName File name
-     * @param bytes
-     * @return
+     * @param bytes Byte array
+     * @return Result
      */
+    @SuppressWarnings("WeakerAccess")
     public static boolean writeCacheFile(
             @NonNull Context context, @NonNull String fileName, @NonNull byte[] bytes) {
-        fileName = removeProhibitedCharacters(fileName);
+        fileName = removeIllegalCharacters(fileName);
         if (fileName.isEmpty()) {
             return false;
         }
@@ -522,8 +557,8 @@ public class FileUtils {
             if (file.createNewFile()) {
                 fos = new FileOutputStream(file);
                 fos.write(bytes);
+                return true;
             }
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -565,7 +600,7 @@ public class FileUtils {
      */
     @Nullable
     public static byte[] readCacheFile(@NonNull Context context, @NonNull String fileName) {
-        fileName = removeProhibitedCharacters(fileName);
+        fileName = removeIllegalCharacters(fileName);
         if (fileName.isEmpty()) {
             return null;
         }
@@ -583,29 +618,5 @@ public class FileUtils {
             e.printStackTrace();
         }
         return null;
-    }
-
-    /**
-     *
-     *
-     * @param context Context
-     * @param fileName File name
-     * @return
-     */
-    public static boolean existsCacheFile(@NonNull Context context, @NonNull String fileName) {
-        fileName = removeProhibitedCharacters(fileName);
-        return (!fileName.isEmpty() && new File(context.getCacheDir(), fileName).exists());
-    }
-
-    /**
-     *
-     *
-     * @param context Context
-     * @param fileName File name
-     * @return
-     */
-    public static boolean deleteCacheFile(@NonNull Context context, @NonNull String fileName) {
-        fileName = removeProhibitedCharacters(fileName);
-        return (!fileName.isEmpty() && new File(context.getCacheDir(), fileName).delete());
     }
 }
