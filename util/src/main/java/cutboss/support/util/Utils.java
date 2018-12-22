@@ -12,13 +12,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
@@ -323,146 +320,6 @@ public class Utils {
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         return null != imm && imm.hideSoftInputFromWindow(view.getWindowToken(), flags);
-    }
-
-    // ---------------------------------------------------------------------------------------------
-    // DATE
-    // ---------------------------------------------------------------------------------------------
-
-    /**
-     * Formats an object to produce a string.
-     *
-     * @param obj The object to format
-     * @return Formatted string
-     */
-    public static String formatDate(Object obj) {
-        return formatDateTime(obj, true, false, false);
-    }
-
-    /**
-     *
-     *
-     * @param obj
-     * @param day
-     * @return
-     */
-    public static String formatDate(Object obj, boolean day) {
-        return formatDateTime(obj, true, day, false);
-    }
-
-    /**
-     *
-     *
-     * @param obj
-     * @return
-     */
-    public static String formatDateTime(Object obj) {
-        return formatDateTime(obj, true, false, true);
-    }
-
-    /**
-     *
-     *
-     * @param obj
-     * @param day
-     * @return
-     */
-    public static String formatDateTime(Object obj, boolean day) {
-        return formatDateTime(obj, true, day, true);
-    }
-
-    /**
-     *
-     *
-     * @param obj
-     * @return
-     */
-    public static String formatYearMonth(Object obj) {
-        return formatDateTime(obj, false, false, false);
-    }
-
-    /**
-     * Formats an object to produce a string.
-     *
-     * @param obj The object to format
-     * @param date
-     * @param day Display day of the week
-     * @param time
-     * @return Formatted string
-     */
-    public static String formatDateTime(Object obj, boolean date, boolean day, boolean time) {
-        // get default locale
-        Locale locale = Locale.getDefault();
-
-        //
-        String pattern;
-        if (Locale.JAPAN.equals(locale) || Locale.JAPANESE.equals(locale)) {
-            // japanese
-            pattern = "yyyy/MM";
-            if (date) {
-                pattern = pattern + "/dd";
-                if (day) {
-                    pattern = pattern + "(E)";
-                }
-                if (time) {
-                    pattern = pattern + " HH:mm";
-                }
-            }
-        } else if (Locale.KOREA.equals(locale) || Locale.KOREAN.equals(locale)) {
-            // 韓国語
-            pattern = "yyyy.MM";
-            if (date) {
-                pattern = pattern + ".dd";
-                if (day) {
-                    pattern = pattern + " (E)";
-                }
-                if (time) {
-                    pattern = pattern + " HH:mm";
-                }
-            }
-        } else if (Locale.SIMPLIFIED_CHINESE.equals(locale)
-                || Locale.CHINA.equals(locale) || Locale.CHINESE.equals(locale)) {
-            // 簡体字
-            pattern = "yyyy-MM";
-            if (date) {
-                pattern = pattern + "-dd";
-                if (day) {
-                    pattern = pattern + "(E)";
-                }
-                if (time) {
-                    pattern = pattern + " HH:mm";
-                }
-            }
-        } else if (Locale.TRADITIONAL_CHINESE.equals(locale) || Locale.TAIWAN.equals(locale)) {
-            // 繫体字
-            pattern = "yyyy-MM";
-            if (date) {
-                pattern = pattern + "-dd";
-                if (day) {
-                    pattern = pattern + "(E)";
-                }
-                if (time) {
-                    pattern = pattern + " HH:mm";
-                }
-            }
-        } else {
-            // english
-            pattern = "";
-            if (date && day) {
-                pattern = pattern + "E ";
-            }
-            pattern = pattern + "MM";
-            if (date) {
-                pattern = pattern + "/dd";
-            }
-            pattern = pattern + "/yyyy";
-            if (date && time) {
-                pattern = pattern + " HH:mm";
-            }
-        }
-
-        // Formatted string.
-        return new SimpleDateFormat(pattern, locale).format(obj);
     }
 
     // ---------------------------------------------------------------------------------------------

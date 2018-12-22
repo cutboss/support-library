@@ -4,6 +4,8 @@
 
 package cutboss.support.util;
 
+import java.util.Locale;
+
 /**
  * NumberUtils.
  *
@@ -24,5 +26,16 @@ public class NumberUtils {
             return false;
         }
         return true;
+    }
+
+    /**
+     *
+     *
+     * @param digits Digits
+     * @param integer Integer
+     * @return
+     */
+    public static String zeroPadding(int digits, int integer) {
+        return String.format(Locale.getDefault(), ("%0" + digits + "d"), integer);
     }
 }
