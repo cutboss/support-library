@@ -15,19 +15,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    packagingOptions {
-        exclude 'assets/*'
-    }
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
-            output.packageLibrary.exclude("libs/*")
-            if (variant.name == android.buildTypes.release.name) {
-                outputFileName = output.outputFile.name.replace(("-release.aar"), "-${version}.aar")
-            } else if (variant.name == android.buildTypes.debug.name) {
-                outputFileName = output.outputFile.name.replace((".aar"), "-${version}.aar")
-            }
-        }
-    }
 }
 
 dependencies {

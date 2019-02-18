@@ -4,10 +4,10 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0.0"
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 2
+        versionName "1.1.0"
         version = android.defaultConfig.versionName
     }
     buildTypes {
@@ -16,23 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    packagingOptions {
-        exclude 'assets/*'
-    }
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
-            output.packageLibrary.exclude("libs/*")
-            if (variant.name == android.buildTypes.release.name) {
-                outputFileName = output.outputFile.name.replace(("-release.aar"), "-${version}.aar")
-            } else if (variant.name == android.buildTypes.debug.name) {
-                outputFileName = output.outputFile.name.replace((".aar"), "-${version}.aar")
-            }
-        }
-    }
 }
 
 dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly 'com.android.support:appcompat-v7:28.0.0'
 }
 
 def repo = new File(rootDir, "repository")
@@ -43,7 +31,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '1.0.0'
+            pom.version = '1.1.0'
             pom.groupId = 'cutboss.support'
             pom.artifactId = 'view'
         }
