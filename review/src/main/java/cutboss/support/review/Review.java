@@ -1,19 +1,20 @@
 /*
- * Copyright (C) 2017 CUTBOSS
+ * Copyright (C) 2017-2019 CUTBOSS
  */
 
 package cutboss.support.review;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
  */
 public class Review {
     /** TAG */
-    private static final String TAG = Review.class.getSimpleName();
+    private static final String TAG = "Review";
 
     // ---------------------------------------------------------------------------------------------
     // REVIEW
@@ -68,6 +69,7 @@ public class Review {
             history.put(date);
             if (JUDGMENT_LAUNCH_COUNT < history.length()) {
                 history.remove(0);
+                // TODO 19-
             }
             sReview.put(KEY_HISTORY, history);
 
@@ -148,7 +150,7 @@ public class Review {
 
         // load review
         try {
-            sReview = new JSONObject(load(context, SHARED_PREFERENCES_KEY_REVIEW));
+            sReview = new JSONObject(load(context));
             if (!sReview.has(KEY_REVIEW) || !sReview.has(KEY_HISTORY)) {
                 // init review
                 initReview();
@@ -230,7 +232,7 @@ public class Review {
         }
         String json = sReview.toString();
         Log.d(TAG, "saveReview: json: " + json);
-        save(context, SHARED_PREFERENCES_KEY_REVIEW, json);
+        save(context, json);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -243,7 +245,7 @@ public class Review {
      * @param activity activity
      * @param url url
      */
-    public static boolean showDialogIfNeeded(Activity activity, String url) {
+    public static boolean showDialogIfNeeded(FragmentActivity activity, String url) {
         // is need review?
         if (!Review.isNeedReview(activity)) {
             return false;
@@ -258,7 +260,7 @@ public class Review {
      * @param activity activity
      * @param url url
      */
-    public static void showDialog(Activity activity, String url) {
+    public static void showDialog(FragmentActivity activity, String url) {
         // set args
         Bundle args = new Bundle();
         args.putString(ReviewDialog.KEY_URL, url);
@@ -267,7 +269,7 @@ public class Review {
         ReviewDialog reviewDialog = new ReviewDialog();
         reviewDialog.setArguments(args);
         reviewDialog.setCancelable(false);
-        reviewDialog.show(activity.getFragmentManager(), ReviewDialog.TAG);
+        reviewDialog.show(activity.getSupportFragmentManager(), ReviewDialog.TAG);
     }
 
     /**
@@ -286,6 +288,7 @@ public class Review {
         public ReviewDialog() {
         }
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // get args
@@ -302,29 +305,39 @@ public class Review {
             final Uri uri = Uri.parse(url);
 
             // create dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final FragmentActivity activity = getActivity();
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setTitle(R.string.review_dialog_title);
             builder.setMessage(R.string.review_dialog_message);
             builder.setPositiveButton(R.string.review_dialog_button_yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Review.setReview(getActivity());
-                    getActivity().startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                    getActivity().finish();
+                    if (null == activity) {
+                        return;
+                    }
+                    Review.setReview(activity);
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                    activity.finish();
                 }
             });
             builder.setNeutralButton(R.string.review_dialog_button_skip, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Review.clearLaunchCount(getActivity());
-                    getActivity().finish();
+                    if (null == activity) {
+                        return;
+                    }
+                    Review.clearLaunchCount(activity);
+                    activity.finish();
                 }
             });
             builder.setNegativeButton(R.string.review_dialog_button_no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Review.setReview(getActivity());
-                    getActivity().finish();
+                    if (null == activity) {
+                        return;
+                    }
+                    Review.setReview(activity);
+                    activity.finish();
                 }
             });
             return builder.create();
@@ -355,12 +368,11 @@ public class Review {
      * Save string.
      *
      * @param context context
-     * @param key key
      * @param value string
      */
-    private static void save(Context context, String key, String value) {
+    private static void save(Context context, String value) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(key, value);
+        editor.putString(SHARED_PREFERENCES_KEY_REVIEW, value);
         editor.apply();
     }
 
@@ -368,10 +380,10 @@ public class Review {
      * Load string.
      *
      * @param context context
-     * @param key key
      * @return string
      */
-    private static String load(Context context, String key) {
-        return getSharedPreferences(context).getString(key, "");
+    private static String load(Context context) {
+        return getSharedPreferences(context)
+                .getString(SHARED_PREFERENCES_KEY_REVIEW, "");
     }
 }
