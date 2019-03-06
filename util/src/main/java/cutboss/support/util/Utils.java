@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2018 CUTBOSS
+ * Copyright (C) 2017-2019 CUTBOSS
  */
 
 package cutboss.support.util;
@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.support.v7.widget.LinearSmoothScroller;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -23,21 +25,50 @@ import java.util.Locale;
  *
  * @author CUTBOSS
  */
+@SuppressWarnings("UnusedDeclaration")
 public class Utils {
     /**
-     *
+     * Get the version name.
      *
      * @param context Context
-     * @return
+     * @return Version name
      */
     public static String getVersionName(Context context) {
         try {
-            return context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0).versionName;
+            return context
+                    .getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0)
+                    .versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * Start the smooth scroll to top.
+     *
+     * @param context Context
+     * @param recyclerView RecyclerView
+     * @return Result
+     */
+    public static boolean startSmoothScrollTop(Context context, RecyclerView recyclerView) {
+        if (null == recyclerView) {
+            return false;
+        }
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        if (null == layoutManager) {
+            return false;
+        }
+        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(context) {
+            @Override
+            protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
+        smoothScroller.setTargetPosition(0);
+        layoutManager.startSmoothScroll(smoothScroller);
+        return true;
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -384,9 +415,9 @@ public class Utils {
             return "";
         }
         String isbn13 = ("978" + isbn10.substring(0, (isbn10.length() - 1)));
-       if (!NumberUtils.isNumeric(isbn13)) {
-           return "";
-       }
+        if (!NumberUtils.isNumeric(isbn13)) {
+            return "";
+        }
         int digit = 0;
         for (int k = 0; k < isbn13.length(); k++) {
             int num = Integer.parseInt(String.valueOf(isbn13.charAt(k)));
