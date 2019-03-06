@@ -369,7 +369,12 @@ public class Utils {
      */
     @SuppressWarnings("WeakerAccess")
     public static boolean hideSoftInput(Context context, View view, int flags) {
-        view.clearFocus();
+        View focusedView = view.findFocus();
+        if (null != focusedView) {
+            focusedView.clearFocus();
+        } else {
+            view.clearFocus();
+        }
         InputMethodManager imm =
                 (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         return (null != imm && imm.hideSoftInputFromWindow(view.getWindowToken(), flags));
