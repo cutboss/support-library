@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2018 CUTBOSS
+ * Copyright (c) 2018-2019 CUTBOSS
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,11 +33,12 @@ import android.net.NetworkInfo;
  *
  * @author CUTBOSS
  */
+@SuppressWarnings("UnusedDeclaration")
 public class NetworkUtils {
     /**
      * Is network connected?
      *
-     * @param context
+     * @param context Context
      * @return is network connected
      */
     public static boolean isNetworkConnected(Context context) {
@@ -54,7 +55,7 @@ public class NetworkUtils {
     /**
      * Is wifi connected?
      *
-     * @param context
+     * @param context Context
      * @return is wifi connected
      */
     public static boolean isWifiConnected(Context context) {
@@ -63,6 +64,8 @@ public class NetworkUtils {
         if (null == networkInfo) {
             return false;
         }
+
+        // get type
         int type = networkInfo.getType();
         if (ConnectivityManager.TYPE_WIFI != type) {
             return false;
@@ -75,7 +78,7 @@ public class NetworkUtils {
     /**
      * Is mobile connected?
      *
-     * @param context
+     * @param context Context
      * @return is mobile connected
      */
     public static boolean isMobileConnected(Context context) {
@@ -84,6 +87,8 @@ public class NetworkUtils {
         if (null == networkInfo) {
             return false;
         }
+
+        // get type
         int type = networkInfo.getType();
         if (ConnectivityManager.TYPE_MOBILE != type) {
             return false;
@@ -94,11 +99,12 @@ public class NetworkUtils {
     }
 
     /**
-     * Get active network info
+     * Get active network info.
      *
-     * @param context
+     * @param context Context
      * @return NetworkInfo
      */
+    @SuppressWarnings("WeakerAccess")
     public static NetworkInfo getActiveNetworkInfo(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
