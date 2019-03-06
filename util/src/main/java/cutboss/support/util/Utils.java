@@ -369,7 +369,7 @@ public class Utils {
      */
     @SuppressWarnings("WeakerAccess")
     public static boolean hideSoftInput(Context context, View view, int flags) {
-        View focusedView = view.findFocus();
+        View focusedView = view.getRootView().findFocus();
         if (null != focusedView) {
             focusedView.clearFocus();
         } else {
