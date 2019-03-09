@@ -48,11 +48,22 @@ import java.util.Locale;
 @SuppressWarnings("UnusedDeclaration")
 public class Utils {
     /**
+     * Get the version text.
+     *
+     * @param context Context
+     * @return Version text
+     */
+    public static String getVersionText(Context context) {
+        return ("Ver." + getVersionName(context));
+    }
+
+    /**
      * Get the version name.
      *
      * @param context Context
      * @return Version name
      */
+    @SuppressWarnings("WeakerAccess")
     public static String getVersionName(Context context) {
         try {
             return context
