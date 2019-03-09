@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2018 CUTBOSS
+ * Copyright (c) 2018-2019 CUTBOSS
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ package cutboss.support.file;
  *
  * @author CUTBOSS
  */
+@SuppressWarnings("UnusedDeclaration")
 public class CsvUtils {
     /**
      * Escape the value.
@@ -36,7 +37,6 @@ public class CsvUtils {
      * @param value Value
      * @return Escaped value
      */
-    @SuppressWarnings("UnusedDeclaration")
     public static String escape(String value) {
         if (null == value) {
             value = "";
