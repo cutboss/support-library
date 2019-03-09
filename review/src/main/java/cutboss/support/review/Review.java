@@ -246,11 +246,24 @@ public class Review {
      * @param url url
      */
     public static boolean showDialogIfNeeded(FragmentActivity activity, String url) {
+        return showDialogIfNeeded(activity, url, 0);
+    }
+
+    /**
+     * Show dialog if needed.
+     *
+     * @param activity activity
+     * @param url url
+     * @param themeResId the resource ID of the theme
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static boolean showDialogIfNeeded(
+            FragmentActivity activity, String url, int themeResId) {
         // is need review?
         if (!Review.isNeedReview(activity)) {
             return false;
         }
-        showDialog(activity, url);
+        showDialog(activity, url, themeResId);
         return true;
     }
 
@@ -261,11 +274,26 @@ public class Review {
      * @param url url
      */
     public static void showDialog(FragmentActivity activity, String url) {
+        showDialog(activity, url, 0);
+    }
+
+    /**
+     * Show dialog.
+     *
+     * @param activity activity
+     * @param url url
+     * @param themeResId the resource ID of the theme
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static void showDialog(FragmentActivity activity, String url, int themeResId) {
         // set args
         Bundle args = new Bundle();
         args.putString(ReviewDialog.KEY_URL, url);
+        if (0 < themeResId) {
+            args.putInt(ReviewDialog.KEY_THEME_RES_ID, themeResId);
+        }
 
-        // show
+        // show dialog
         ReviewDialog reviewDialog = new ReviewDialog();
         reviewDialog.setArguments(args);
         reviewDialog.setCancelable(false);
@@ -281,6 +309,7 @@ public class Review {
 
         /** KEY */
         public static final String KEY_URL = "key_url";
+        public static final String KEY_THEME_RES_ID = "key_theme_res_id";
 
         /**
          * Default constructor.
@@ -294,10 +323,16 @@ public class Review {
             // get args
             Bundle args = getArguments();
             String url = "";
+            int themeResId = 0;
             if (null != args) {
                 // get url
                 if (args.containsKey(KEY_URL)) {
                     url = args.getString(KEY_URL);
+                }
+
+                // get theme res id
+                if (args.containsKey(KEY_THEME_RES_ID)) {
+                    themeResId = args.getInt(KEY_THEME_RES_ID);
                 }
             }
 
@@ -306,7 +341,12 @@ public class Review {
 
             // create dialog
             final FragmentActivity activity = getActivity();
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            AlertDialog.Builder builder;
+            if (0 < themeResId) {
+                builder = new AlertDialog.Builder(activity, themeResId);
+            } else {
+                builder = new AlertDialog.Builder(activity);
+            }
             builder.setTitle(R.string.review_dialog_title);
             builder.setMessage(R.string.review_dialog_message);
             builder.setPositiveButton(R.string.review_dialog_button_yes, new DialogInterface.OnClickListener() {
