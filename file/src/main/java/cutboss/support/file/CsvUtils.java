@@ -24,6 +24,8 @@
 
 package cutboss.support.file;
 
+import java.util.List;
+
 /**
  * CsvUtils.
  *
@@ -32,11 +34,39 @@ package cutboss.support.file;
 @SuppressWarnings("UnusedDeclaration")
 public class CsvUtils {
     /**
+     *
+     *
+     * @param values
+     * @return
+     */
+    public static String build(List<List<Object>> values) {
+        // BOM UTF-8
+        StringBuilder csv = new StringBuilder("\ufeff");
+
+        // get line
+        for (List<Object> line : values) {
+            // get value
+            for (int i = 0; i < line.size(); i++) {
+                csv.append(CsvUtils.escape(String.valueOf(line.get(i))));
+                if (i == (line.size() - 1)) {
+                    csv.append("\n");
+                } else {
+                    csv.append(",");
+                }
+            }
+        }
+
+        // get string
+        return csv.toString();
+    }
+
+    /**
      * Escape the value.
      *
      * @param value Value
      * @return Escaped value
      */
+    @SuppressWarnings("WeakerAccess")
     public static String escape(String value) {
         if (null == value) {
             value = "";

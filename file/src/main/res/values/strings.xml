@@ -1,2 +1,5 @@
 <resources>
+    <string name="csv_file">CSV file</string>
+    <string name="csv_file_attached">CSV file is attached.</string>
+    <string name="text_format_separated_by_commas">CSV (Comma Separated) (*.csv)\nIt is a text format separated by commas.</string>
 </resources>
