@@ -49,7 +49,7 @@ public class CsvUtils {
             for (int i = 0; i < line.size(); i++) {
                 csv.append(CsvUtils.escape(String.valueOf(line.get(i))));
                 if (i == (line.size() - 1)) {
-                    csv.append("\n");
+                    csv.append("\r\n");
                 } else {
                     csv.append(",");
                 }
