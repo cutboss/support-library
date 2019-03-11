@@ -1,5 +1,5 @@
 <resources>
     <string name="csv_file">CSV 파일</string>
     <string name="csv_file_attached">CSV 파일을 첨부합니다.</string>
-    <string name="text_format_separated_by_commas">CSV (쉼표로 구분) (*.csv)\n쉼표로 구분 된 텍스트 형식입니다.</string>
+    <string name="text_format_separated_by_commas">CSV UTF-8 (쉼표로 구분) (*.csv)\n쉼표로 구분 된 텍스트 형식입니다.</string>
 </resources>
