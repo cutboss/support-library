@@ -24,6 +24,7 @@
 
 package cutboss.support.file;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,5 +75,104 @@ public class CsvUtils {
             value = "\"" + value.replace("\"", "\"\"") + "\"";
         }
         return value;
+    }
+
+    /**
+     *
+     *
+     * @param csv Csv
+     * @return Values
+     */
+    public static List<List<Object>> parse(String csv) {
+        // empty
+        if ((null == csv) || csv.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // BOM?
+        if (csv.startsWith("\ufeff")) {
+            csv = csv.replace("\ufeff", "");
+        }
+        if (!csv.endsWith("\n")) {
+            if (!csv.endsWith("\r")) {
+                csv += "\r";
+            }
+            csv += "\n";
+        }
+
+        //
+        List<List<Object>> values = new ArrayList<>();
+        List<Object> line = new ArrayList<>();
+        boolean doubleQuotation = false;
+        int start = 0;
+        for (int i = 0; i < csv.length(); i++) {
+            char c = csv.charAt(i);
+            if ('"' == c) {
+                doubleQuotation = true;
+                continue;
+            }
+            if (',' == c) {
+                boolean cut = false;
+                if (doubleQuotation) {
+                    if (0 == (countDoubleQuotes(csv.substring(start, i)) % 2)) {
+                        doubleQuotation = false;
+                        cut = true;
+                    } else {
+                        continue;
+                    }
+                }
+                String value = csv.substring(start, i);
+                if (cut) {
+                    value = value.substring(1, value.length() - 1);
+                    value = value.replace("\"\"", "\"");
+                }
+                line.add(value);
+                start = (i + 1);
+                continue;
+            }
+            if ('\n' == c) {
+                boolean cut = false;
+                if (doubleQuotation) {
+                    if (0 == (countDoubleQuotes(csv.substring(start, i)) % 2)) {
+                        doubleQuotation = false;
+                        cut = true;
+                    } else {
+                        continue;
+                    }
+                }
+                String value = csv.substring(start, i).replace("\r", "");
+                if (cut) {
+                    value = value.substring(1, value.length() - 1);
+                    value = value.replace("\"\"", "\"");
+                }
+                line.add(value);
+                start = (i + 1);
+
+                values.add(new ArrayList<>(line));
+                line.clear();
+            }
+        }
+        return values;
+    }
+
+    /**
+     *
+     *
+     * @param text Text
+     * @return Count
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static int countDoubleQuotes(String text) {
+        if (null == text) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if ('"' == c) {
+                count++;
+            }
+        }
+        return count;
     }
 }
