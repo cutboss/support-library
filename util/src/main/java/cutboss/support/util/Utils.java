@@ -102,6 +102,17 @@ public class Utils {
         return true;
     }
 
+    /**
+     *
+     *
+     * @return Is japanese
+     */
+    public static boolean isJapanese() {
+        // get default locale
+        Locale locale = Locale.getDefault();
+        return (Locale.JAPAN.equals(locale) || Locale.JAPANESE.equals(locale));
+    }
+
     // ---------------------------------------------------------------------------------------------
     // BROWSER
     // ---------------------------------------------------------------------------------------------
