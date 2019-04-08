@@ -70,14 +70,20 @@ public class FileUtils {
      * @return file name
      */
     @NonNull
-    public static String getFileNameFromUri(@NonNull Context context, Uri uri) {
+    public static String getFileNameFromUri(Context context, Uri uri) {
         // is null
+        if (null == context) {
+            return "";
+        }
         if (null == uri) {
             return "";
         }
 
         // get scheme
         String scheme = uri.getScheme();
+        if (null == scheme) {
+            return "";
+        }
 
         // get file name
         String fileName = "";
@@ -96,11 +102,18 @@ public class FileUtils {
                 break;
 
             case "file":
-                fileName = new File(uri.getPath()).getName();
+                String path = uri.getPath();
+                if (null == path) {
+                    return "";
+                }
+                fileName = new File(path).getName();
                 break;
 
             default:
                 break;
+        }
+        if (null == fileName) {
+            return "";
         }
         return fileName;
     }
@@ -128,7 +141,10 @@ public class FileUtils {
      * @return file name with extension removed
      */
     @NonNull
-    public static String removeFileNameExtension(final @NonNull String fileName) {
+    public static String removeFileNameExtension(final String fileName) {
+        if (null == fileName) {
+            return "";
+        }
         int point = fileName.lastIndexOf(".");
         if (-1 < point) {
             return fileName.substring(0, point);
